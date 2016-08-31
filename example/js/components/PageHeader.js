@@ -6,7 +6,7 @@ export default function() {
       <div className="title pull-left"><a href="/">exerslide</a></div>
       <div className="navigation pull-right">
         <a href="#/docs">Docs</a>
-        <a href="https://github.com/facebook/exerslide">GitHub</a>
+        <a href="https://github.com/facebookincubator/exerslide">GitHub</a>
       </div>
     </div>
   );
