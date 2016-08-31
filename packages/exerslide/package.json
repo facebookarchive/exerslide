@@ -1,6 +1,6 @@
 {
   "name": "exerslide",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool for creating HTML presentations with focus on exercises for web technologies",
   "scripts": {
     "test": "mocha --compilers js:babel-register `find lib/ browser/ -name *-test.js`",
