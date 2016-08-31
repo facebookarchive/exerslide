@@ -8,7 +8,7 @@
 
 import React from 'react';
 import ExtensionPoint from 'exerslide/components/ExtensionPoint';
-import {nextSlide, previousSlide} from 'exerslide/browser';
+import {forward, back} from 'exerslide/browser';
 
 import './css/toolbar.css';
 
@@ -29,7 +29,7 @@ export default function Toolbar({className}, {slideIndex, slides}) {
           className="exerslide-toolbar-button"
           type="button"
           aria-label="previous"
-          onClick={previousSlide}
+          onClick={back}
           disabled={slideIndex === 0}>
           <i className="fa fa-lg fa-chevron-left"></i>
         </button>
@@ -44,7 +44,7 @@ export default function Toolbar({className}, {slideIndex, slides}) {
           className="exerslide-toolbar-button"
           type="button"
           aria-label="next"
-          onClick={nextSlide}
+          onClick={forward}
           disabled={slideIndex + 1 === numberOfSlides}>
           <i className="fa fa-lg fa-chevron-right"></i>
         </button>
