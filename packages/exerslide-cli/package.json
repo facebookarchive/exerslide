@@ -1,0 +1,35 @@
+{
+  "name": "exerslide-cli",
+  "version": "1.0.0",
+  "description": "A tool for creating HTML presentations with focus on exercises for web technologies",
+  "main": "dist/scaffolder.js",
+  "bin": {
+    "exerslide": "./bin/exerslide.js"
+  },
+  "scripts": {
+    "lint": "eslint bin/"
+  },
+  "keywords": [
+    "presentation-generator",
+    "accessible",
+    "tutorial-generator"
+  ],
+  "author": "Felix Kling",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "liftoff": "^2.2.1",
+    "yargs": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facebookincubator/exerslide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/facebookincubator/exerslide/issues"
+  },
+  "homepage": "https://github.com/facebookincubator/exerslide#readme"
+}

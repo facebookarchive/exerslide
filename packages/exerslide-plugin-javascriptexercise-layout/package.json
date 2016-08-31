@@ -1,0 +1,24 @@
+{
+  "name": "exerslide-plugin-javascriptexercise-layout",
+  "version": "1.0.0",
+  "description": "A JavaScript exercise layout for exerslide.",
+  "author": "Felix Kling",
+  "dependencies": {
+    "babel-runtime": "^6.11.6",
+    "chai": "^3.4.1",
+    "classnames": "^2.1.1"
+  },
+  "peerDependencies": {
+    "codemirror": "^5.10.0",
+    "exerslide": "~1.0.0",
+    "react": "^15.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facebookincubator/exerslide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/facebookincubator/exerslide/issues"
+  },
+  "homepage": "https://github.com/facebookincubator/exerslide#readme"
+}

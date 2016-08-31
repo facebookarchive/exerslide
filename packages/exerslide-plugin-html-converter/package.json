@@ -1,0 +1,20 @@
+{
+  "name": "exerslide-plugin-html-converter",
+  "version": "1.0.0",
+  "description": "An HTML to React element converter for exerslide.",
+  "author": "Felix Kling",
+  "dependencies": {
+    "babel-runtime": "^6.11.6"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facebookincubator/exerslide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/facebookincubator/exerslide/issues"
+  },
+  "homepage": "https://github.com/facebookincubator/exerslide#readme"
+}

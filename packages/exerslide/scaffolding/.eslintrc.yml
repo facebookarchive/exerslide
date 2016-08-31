@@ -1,0 +1,6 @@
+parserOptions:
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+
+rules:
+  import/no-unresolved: [2, { ignore: ['^(exerslide/|!!)'] }]

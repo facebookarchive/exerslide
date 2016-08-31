@@ -1,0 +1,115 @@
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+.exerslide-toc-container {
+  background-color: #F4F4F4;
+  border-right: 1px solid #CCC;
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+  min-width: 20em;
+}
+
+.exerslide-toc-container.collapsed {
+  background-color: inherit;
+  border-right: none;
+  min-width: 0;
+  position: absolute;
+  z-index: 100;
+}
+
+ol.exerslide-toc-entries,
+ol#exerslide-toc-list {
+  list-style: none;
+  counter-reset: item;
+  overflow-y: auto;
+  margin: 0;
+}
+
+ol#exerslide-toc-list {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+ol.exerslide-toc-entries {
+  padding-left: 0;
+}
+
+ol#exerslide-toc-list > * {
+  margin-bottom: 1em;
+}
+
+#exerslide-toc-title,
+.exerslide-toc-container.collapsed > #exerslide-toc-list {
+  display: none;
+}
+
+.exerslide-toc-toggleButton {
+  align-self: flex-end;
+  background-color: transparent;
+  border: none;
+  color: #AAA;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 1em;
+  outline-width: thin;
+  padding: 0.5em;
+}
+
+.exerslide-toc-toggleButton:hover {
+  color: inherit;
+}
+
+#toc-list > :first-child {
+  margin-top: 0;
+}
+
+.exerslide-toc-entry,
+.exerslide-toc-chapter {
+  display: block;
+}
+
+.exerslide-toc-entry::before,
+.exerslide-toc-chapter::before {
+  content: counters(item, '.') ". ";
+  counter-increment: item;
+}
+
+.exerslide-toc-title {
+  display: inline-block;
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+#exerslide-toc-list > .exerslide-toc-entry::before,
+#exerslide-toc-list > .exerslide-toc-entry,
+.exerslide-toc-chapter::before,
+.exerslide-toc-title {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.exerslide-toc-entry {
+  padding: 0.1em 0;
+}
+
+.exerslide-toc-entry > a {
+  color: inherit;
+}
+
+.exerslide-toc-entry,
+.exerslide-toc-entry > a {
+  text-decoration: none;
+  outline-width: thin;
+}
+
+.exerslide-toc-entry.active,
+.exerslide-toc-entry.active > a,
+.exerslide-toc-entry:hover {
+  color: #428bca;
+}

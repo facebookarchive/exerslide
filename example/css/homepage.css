@@ -1,0 +1,80 @@
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+#exerslide-page {
+  flex-direction: column;
+}
+
+#exerslide-page > .page-header {
+  margin: 0;
+  padding: 0 10px;
+  background-color: #555
+}
+
+#exerslide-page > .page-header a {
+  color: white;
+}
+
+#exerslide-page > .page-wrapper {
+  min-height: 0;
+  flex-grow: 1;
+}
+
+#exerslide-page > .page-header > .title {
+  color: #EFEFEF;
+  font-size: 1.4em;
+  font-weight: bold;
+  padding: 10px;
+}
+
+#exerslide-page > .page-header > .navigation {
+  padding: 10px;
+  font-size: 1.4em;
+}
+
+#exerslide-page > .page-header > .navigation > a {
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 0 10px;
+}
+
+#exerslide-slide #exerslide-slide-title {
+  text-align: left;
+}
+
+#exerslide-slide pre > code {
+  font-size: 0.8em;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.accessible-example input[type="checkbox"] {
+  margin: 0;
+}
+
+.accessible-example {
+  margin-bottom: 1rem;
+}
+
+.accessible-example label + pre > code,
+.accessible-example label + div > pre > code,
+.accessible-example label + pre + pre > code,
+.accessible-example label + div + div > code {
+  margin-top: 0;
+}
+
+.accessible-example label + div + div,
+.accessible-example label + pre + pre {
+  display: none;
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="501px" height="268px" viewBox="0 0 501 268" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>anatomy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0.19871306" width="283" height="33.7068966"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="283" height="33.7068966" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <rect id="path-3" x="0" y="0.00350013134" width="283" height="153.539993"></rect>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="283" height="153.539993" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+        <rect id="path-5" x="0" y="0.671959155" width="312" height="228.88966"></rect>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="312" height="228.88966" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+        <rect id="path-7" x="0" y="0" width="157" height="229"></rect>
+        <mask id="mask-8" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="157" height="229" fill="white">
+            <use xlink:href="#path-7"></use>
+        </mask>
+        <rect id="path-9" x="0" y="0.489997864" width="499" height="265.51001"></rect>
+        <mask id="mask-10" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="499" height="265.51001" fill="white">
+            <use xlink:href="#path-9"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Page-+-Page-(#page)" transform="translate(1.000000, 1.000000)">
+            <g id="Main-+-Main-area-(#main)" transform="translate(177.000000, 26.878243)">
+                <g id="Navigation-+-Navigation-(#navigat" transform="translate(14.000000, 186.211753)">
+                    <use id="Navigation" stroke="#979797" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+                    <text id="Toolbar-(.exerslide-" font-family="Helvetica" font-size="13.8793103" font-weight="normal" fill="#4E5665">
+                        <tspan x="58.4594432" y="21.7933176">Toolbar (.exerslide-toolbar)</tspan>
+                    </text>
+                </g>
+                <g id="Slide-+-Slide" transform="translate(14.000000, 24.698258)">
+                    <text id="Slide-(#exerslide-sl" font-family="Helvetica" font-size="13.8793103" font-weight="normal" fill="#4E5665">
+                        <tspan x="123.568755" y="74.1545957">Slide</tspan>
+                        <tspan x="86.1630649" y="91.1545957">(#exerslide-slide)</tspan>
+                    </text>
+                    <use id="Slide" stroke="#979797" mask="url(#mask-4)" stroke-width="2" xlink:href="#path-3"></use>
+                </g>
+                <use id="Main" stroke="#979797" mask="url(#mask-6)" stroke-width="2" xlink:href="#path-5"></use>
+                <text id="Main-area-(#exerslid" font-family="Helvetica" font-size="13.8793103" font-weight="normal" fill="#4E5665">
+                    <tspan x="6" y="16.6719592">Main area (#exerslide-main)</tspan>
+                </text>
+            </g>
+            <g id="Table-of-Contents-+-Table-of-Contents" transform="translate(10.000000, 27.878243)">
+                <text id="Table-of-Contents" font-family="Helvetica" font-size="12.6321839" font-weight="normal" fill="#4E5665">
+                    <tspan x="32.0505539" y="120.19298">Table of Contents</tspan>
+                    <tspan x="11.3536335" y="136.19298">(.exerslide-toc-container)</tspan>
+                </text>
+                <use id="Table-of-Contents" stroke="#979797" mask="url(#mask-8)" stroke-width="2" xlink:href="#path-7"></use>
+            </g>
+            <use id="Page" stroke="#979797" mask="url(#mask-10)" stroke-width="2" xlink:href="#path-9"></use>
+            <text id="Page-(#exerslide-pag" font-family="Helvetica" font-size="14" font-weight="normal" fill="#4E5665">
+                <tspan x="10" y="19">Page (#exerslide-page)</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,48 @@
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+.exerslide-toolbar {
+  box-sizing: border-box;
+  color: #BBB;
+  padding: 0 1.5em;
+  text-align: right;
+  width: 100%;
+}
+
+.exerslide-toolbar-button,
+.exerslide-toolbar-text {
+  font-size: 1.05rem;
+}
+.exerslide-toolbar-button {
+  background-color: transparent;
+  cursor: pointer;
+  color: #BBB;
+  border: none;
+  padding: 10px;
+}
+
+.exerslide-toolbar-button:focus,
+.exerslide-toolbar-button:hover {
+  color: #555;
+}
+
+.exerslide-toolbar-button[disabled] {
+  visibility: hidden;
+}
+
+@media(max-width: 768px) {
+  .exerslide-toolbar {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  .exerslide-toolbar-button,
+  .exerslide-toolbar-text {
+    font-size: 1.5rem;
+  }
+}

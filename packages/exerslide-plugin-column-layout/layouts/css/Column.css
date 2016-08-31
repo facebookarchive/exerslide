@@ -1,0 +1,50 @@
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+.Column-wrapper {
+  display: flex;
+  flex-shrink: 0; /* have the same height as the children */
+}
+
+.Column-column {
+  flex: 1;
+  padding: 10px;
+  min-width: 150px;
+  box-sizing: content-box;
+}
+
+.Column-top {
+  flex: 1;
+  align-self: flex-start;
+}
+
+.Column-middle {
+  flex: 1;
+  align-self: center;
+}
+
+.Column-bottom {
+  flex: 1;
+  align-self: flex-end;
+}
+
+.Column-left {
+  text-align: left;
+}
+
+.Column-center {
+  text-align: center;
+}
+
+.Column-right {
+  text-align: right;
+}
+
+.Column-column > img {
+  flex-shrink: 0;
+}

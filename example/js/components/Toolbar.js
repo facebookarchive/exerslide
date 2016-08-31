@@ -1,0 +1,70 @@
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+import React from 'react';
+import ExtensionPoint from 'exerslide/components/ExtensionPoint';
+import {nextSlide, previousSlide} from 'exerslide/browser';
+
+import './css/toolbar.css';
+
+/**
+ * This components generates a previous and next buttons (rendered as arrows,
+ * using Font Awesome) to navigate the presentation.
+ */
+export default function Toolbar({className}, {slideIndex, slides}) {
+  const numberOfSlides = slides.length;
+
+  return (
+    <ExtensionPoint tags={['toolbar', 'content']}>
+      <div
+        role="navigation"
+        className={'exerslide-toolbar ' + className}
+        aria-label="Slide">
+        <button
+          className="exerslide-toolbar-button"
+          type="button"
+          aria-label="previous"
+          onClick={previousSlide}
+          disabled={slideIndex === 0}>
+          <i className="fa fa-lg fa-chevron-left"></i>
+        </button>
+        <span
+          aria-label={
+            'Slide ' + (slideIndex + 1) + ' of ' + numberOfSlides
+          }
+          className="exerslide-toolbar-text">
+          {' ' + (slideIndex + 1) + '/' + numberOfSlides + ' '}
+        </span>
+        <button
+          className="exerslide-toolbar-button"
+          type="button"
+          aria-label="next"
+          onClick={nextSlide}
+          disabled={slideIndex + 1 === numberOfSlides}>
+          <i className="fa fa-lg fa-chevron-right"></i>
+        </button>
+      </div>
+    </ExtensionPoint>
+  );
+}
+
+Toolbar.propTypes = {
+  className: React.PropTypes.string,
+};
+
+Toolbar.contextTypes = {
+  /**
+   * This index of the current slide.
+   */
+  slideIndex: React.PropTypes.number.isRequired,
+
+  /**
+   * Number of slides.
+   */
+  slides: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+};

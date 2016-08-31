@@ -1,0 +1,47 @@
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+/* Editor */
+
+.editor {
+  border: 1px solid #EEE;
+  position: relative;
+  /* Always stretch to the parent's width, instead of the editor's content */
+  /* override for custom width */
+  width: 100%;
+}
+
+.editor,
+.editor .CodeMirror,
+.editor .CodeMirror-gutters {
+  background-color: #f5f5f5;
+}
+
+.editor > textarea.CodeMirror {
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  resize: none;
+  overflow: auto;
+}
+
+.editor .CodeMirror-gutters {
+}
+
+.editor .editor-toggle-button {
+  position: absolute;
+  left: -10000px;
+  z-index: 20;
+}
+
+.editor .editor-toggle-button:focus,
+.editor:hover .editor-toggle-button {
+  left: auto;
+  right: 10px;
+  top: 10px;
+}

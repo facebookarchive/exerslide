@@ -1,0 +1,31 @@
+{
+  "name": "exerslide-plugin-markdown-converter",
+  "version": "1.0.0",
+  "description": "An HTML to React element converter for exerslide.",
+  "author": "Felix Kling",
+  "scripts": {
+    "test": "mocha `find __tests__/ -name *-test.js`"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.11.6",
+    "highlight.js": "^9.6.0",
+    "markdown-it": "^7.0.1"
+  },
+  "peerDependencies": {
+    "exerslide": "~1.0.0",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facebookincubator/exerslide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/facebookincubator/exerslide/issues"
+  },
+  "homepage": "https://github.com/facebookincubator/exerslide#readme"
+}

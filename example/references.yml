@@ -1,0 +1,19 @@
+# You can keep links to external sources here. This lets you avoid repeating the
+# same URL on different slides. The default markdown parser takes these into
+# account.The format is: "name: URL"
+#
+# Example:
+#
+# example: http://example.org
+
+gulp: http://gulpjs.com
+html: https://en.wikipedia.org/wiki/HTML
+markdown: https://en.wikipedia.org/wiki/Markdown
+media type: https://en.wikipedia.org/wiki/Media_type
+react: http://facebook.github.io/react/
+webpack: http://webpack.github.io
+yaml: https://en.wikipedia.org/wiki/YAML
+node: https://nodejs.org/en/
+nvm: https://github.com/creationix/nvm
+snake case: https://en.wikipedia.org/wiki/Snake_case
+camel case: https://en.wikipedia.org/wiki/CamelCase
