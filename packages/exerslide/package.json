@@ -66,6 +66,7 @@
   },
   "homepage": "https://github.com/facebookincubator/exerslide#readme",
   "eslintConfig": {
+    "plugins": ["react"],
     "extends": [
       "plugin:react/recommended",
       "plugin:import/errors",

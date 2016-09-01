@@ -104,7 +104,6 @@ export default class Slide extends React.Component {
   }
 
   onForward() {
-    console.log(this._layout);
     return Boolean(
       this._layout &&
       this._layout.onForward &&

@@ -1,6 +1,4 @@
 root: true
-plugins:
-  - react
 env:
   node: true
 extends: ["eslint:recommended"]
