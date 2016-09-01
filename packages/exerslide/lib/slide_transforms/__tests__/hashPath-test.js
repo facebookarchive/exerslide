@@ -6,6 +6,8 @@
  * the root directory of this source tree.
  */
 
+'use strict';
+
 const hashPath = require('../hashPath');
 const expect = require('chai').expect;
 

@@ -6,6 +6,8 @@
  * the root directory of this source tree.
  */
 
+'use strict';
+
 const expect = require('chai').expect;
 const copyDir = require('../copyDir');
 const testUtils = require('../../../scripts/test-utils');

@@ -33,7 +33,7 @@ exports.validateOptions = function validateOptions(options, defaults) {
     if (prop === 'defaults') {
       const result = validateOptions(options[prop], true);
       if (!result[0]) {
-        errors.push(...result[1]);
+        errors.push.apply(errors, result[1]);
       }
       continue;
     }

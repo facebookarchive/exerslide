@@ -32,7 +32,7 @@ module.exports = function(config) {
             languages.add(match[1].toLowerCase());
           }
         }
-        const foundLanguages = [...languages].reduce(
+        const foundLanguages = Array.from(languages).reduce(
           (list, name) => {
             if (languagePaths[name]) {
               list[name] = languagePaths[name];
@@ -41,7 +41,7 @@ module.exports = function(config) {
           },
           {}
         );
-        const missingLanguages = [...languages].filter(
+        const missingLanguages = Array.from(languages).filter(
           name => !foundLanguages[name]
         );
         if (missingLanguages.length > 0) {

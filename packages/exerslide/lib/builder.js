@@ -186,6 +186,10 @@ function bundle(exerslideConfig, webpackConfig, logger) {
       }
       if (stats.hasErrors()) {
         stats.compilation.errors.forEach(error => {
+          if (!error.module) {
+            logger.error(id, `Unknown error: ${error.message}\n`);
+            return;
+          }
           const relativePath = path.relative(
             webpackConfig.context,
             error.module.resource
@@ -195,6 +199,9 @@ function bundle(exerslideConfig, webpackConfig, logger) {
       }
       if (stats.hasWarnings()) {
         stats.compilation.warnings.forEach(warning => {
+          if (!warning.module) {
+            logger.warn(id, `Unknown warning: ${warning.message}\n`);
+          }
           const relativePath = path.relative(
             webpackConfig.context,
             warning.module.resource

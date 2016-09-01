@@ -35,9 +35,9 @@ describe('optionHelper', () => {
   });
 
   it ('recommends similiarly named options', () => {
-    const [_, [msg]] = validateOptions({layoutdata: {}}); // eslint-disable-line no-unused-vars
-    expect(msg.message).to.contain('layoutdata');
-    expect(msg.message).to.contain('layout_data');
+    const result = validateOptions({layoutdata: {}});
+    expect(result[1][0].message).to.contain('layoutdata');
+    expect(result[1][0].message).to.contain('layout_data');
   });
 
   describe('scale', () => {
