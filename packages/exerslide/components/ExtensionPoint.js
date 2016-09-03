@@ -60,7 +60,6 @@ export default class ExtensionPoint extends React.Component {
 
   render() {
     const {components} = this.state;
-    let container = React.Children.only(this.props.children);
     const defaultProps = {
       slide: this.context.slide,
       slideIndex: this.context.slideIndex,
@@ -77,6 +76,10 @@ export default class ExtensionPoint extends React.Component {
         defaultProps
       );
     }
+
+    let container = this.props.children ?
+      React.Children.only(this.props.children) :
+      <div />;
 
     if (components.before || components.after) {
       const children = [];
@@ -99,13 +102,46 @@ export default class ExtensionPoint extends React.Component {
     }
 
     if (components.wrap) {
-      return components.wrap.reduce((container, component) => {
-        return React.createElement(
-          component,
-          defaultProps,
-          container
-        );
-      }, container);
+      /**
+       * If we have multiple wrappers, we have to properly thread the
+       * properties of the wrapped component through them.
+       * Lets say we have two wrappers, then the component tree looks something
+       * like this:
+       *
+       * <Wrapper2>----------------+
+       * | <Wrapper1-------------+ |
+       * | | <div style={...} /> | |
+       * | +---------------------+ |
+       * +-------------------------+
+       *
+       * Wrapper1 can easily inject new style values while preserving the div's
+       * style prop by accessing child.props.style.
+       *
+       * Wrapper2 however doesn't have access to this prop. To be able to merge
+       * new values into the div's prop, we have to pass the props of the inner
+       * component to the outermost component.
+       *
+       * Every wrapper has to pass additional props down to its child so that
+       * the (possibly augmented) original props reach the inner component.
+       */
+      const innerProps = container.props;
+      container = components.wrap
+        .slice(0, -1)
+        .reduce((container, component) => {
+          return React.createElement(
+            component,
+            defaultProps,
+            container
+          );
+        }, container);
+      return React.createElement(
+        components.wrap[components.wrap.length - 1],
+        {
+          ...defaultProps,
+          ...innerProps,
+        },
+        container
+      );
     }
 
     return container;
@@ -113,12 +149,12 @@ export default class ExtensionPoint extends React.Component {
 }
 
 ExtensionPoint.propTypes = {
+  tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   children: React.PropTypes.node,
-  tags: React.PropTypes.arrayOf(React.PropTypes.string),
 };
 
 ExtensionPoint.contextTypes = {
-  slide: React.PropTypes.object,
+  slide: React.PropTypes.object.isRequired,
   slideIndex: React.PropTypes.number.isRequired,
   slides: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 };

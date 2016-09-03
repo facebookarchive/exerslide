@@ -102,11 +102,11 @@ class Visibility extends React.Component {
 
   render() {
     const {
-      children: _children,
+      children,
       slide: _slide,
       slideIndex: _slideIndex,
       slides: _slides,
-      ...props,
+      ...restProps,
     } = this.props;
 
     const announcement = this.state.contentOverflow ?
@@ -118,12 +118,12 @@ class Visibility extends React.Component {
           content is visible`}
       </span> :
       null;
-    let child = React.Children.only(this.props.children);
+    let child = React.Children.only(children);
 
     return React.cloneElement(
       child,
       {
-        ...props,
+        ...restProps,
         ref: ref => {
           this._node = ref;
           if (typeof child.ref === 'function') {

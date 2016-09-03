@@ -62,3 +62,10 @@ export function registerExtension(component, mode, tags) {
     }
   };
 }
+
+/**
+ * This function "unregisters" all components. Only used in test.
+ */
+export function clearAll_FOR_TESTS() {
+  components.length = 0;
+}
