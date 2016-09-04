@@ -17,14 +17,28 @@ exports.builder = function(yargs) {
   return yargs
     .option({
       port: {
-        alias: ['p'],
+        alias: 'p',
         describe: 'Port the webserver should listen to',
         requiresArg: true,
         nargs: 1,
         default: 8080,
       },
+      'open-browser': {
+        alias: 'o',
+        boolean: true,
+        describe: 'Automatically open presentation in browser.',
+        default: true,
+      },
+      verbose: {
+        alias: ['v'],
+        boolean: true,
+        describe:
+          'Show more detailed webpack output instead (useful for debugging webpack).',
+        default: false,
+      },
     })
     .example('$0 serve')
+    .example('$0 serve --no-open-browser')
     .example('$0 serve -p 8000');
 };
 exports.handler = function(argv) {
@@ -40,7 +54,7 @@ exports.handler = function(argv) {
         configBase: env.configBase,
         config: exerslideConfig,
       },
-      argv.port
+      argv
     );
   });
 };

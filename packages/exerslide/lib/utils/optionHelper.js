@@ -71,8 +71,8 @@ function typeValidator(field, type) {
     if (typeof x !== type) {
       error(
         field,
-        `Exepected as value of type "${type}" but got value ` +
-        `"${JSON.stringify(x)}" instead.`
+        `Expected a value of type "${type}" but got value ` +
+        `\`${JSON.stringify(x)}\` instead.`
       );
     }
     return true;
@@ -106,8 +106,12 @@ const availableOptions = {
     validate: typeValidator('script', 'string'),
   },
   chapter: {},
-  layout: {},
-  content_type: {},
+  layout: {
+    validate: typeValidator('layout', 'string'),
+  },
+  content_type: {
+    validate: typeValidator('content_type', 'string'),
+  },
   class_names: {
     default: true,
     validate(value) {

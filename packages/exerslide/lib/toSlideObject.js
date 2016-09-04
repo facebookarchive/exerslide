@@ -36,7 +36,7 @@ module.exports = function toSlide(content, options) {
           slide = getErrorSlideObject(
             'Invalid options',
             options.resourcePath,
-            {message: validationResult[1].join('\n')},
+            new Error(validationResult[1].map(e => e.message).join('\n')),
             content
           );
           return false;

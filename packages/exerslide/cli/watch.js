@@ -16,6 +16,15 @@ exports.command = 'watch [out]';
 exports.describe = 'create a developement version of the presentation and automatically rebuild on file changes';
 exports.builder = function(yargs) {
   return yargs
+    .option({
+      verbose: {
+        alias: ['v'],
+        boolean: true,
+        describe:
+          'Show more detailed webpack output instead (useful for debugging webpack).',
+        default: false,
+      },
+    })
     .example('$0 watch')
     .example('$0 watch ./site');
 };
@@ -41,11 +50,12 @@ exports.handler = function(argv) {
     }
 
     exerslideConfig
-      .then(config => (
-        builder.build({
+      .then(config => builder.watch(
+        {
           configBase: env.configBase,
           config: config,
-        })
+        },
+        argv
       ))
       .catch(error => utils.logError(error));
   });

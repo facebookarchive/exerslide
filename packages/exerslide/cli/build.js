@@ -17,6 +17,15 @@ exports.command = 'build [out]';
 exports.describe = 'create a production-ready version of the presentation';
 exports.builder = function(yargs) {
   return yargs
+    .option({
+      verbose: {
+        alias: ['v'],
+        boolean: true,
+        describe:
+          'Show more detailed webpack output instead (useful for debugging webpack).',
+        default: false,
+      },
+    })
     .example('$0 build')
     .example('$0 build ./site');
 };
@@ -47,11 +56,12 @@ exports.handler = function(argv) {
     }
 
     exerslideConfig
-      .then(config => (
-        builder.build({
+      .then(config => builder.build(
+        {
           configBase: env.configBase,
           config: config,
-        })
+        },
+        argv
       ))
       .catch(error => utils.logError(error));
   });

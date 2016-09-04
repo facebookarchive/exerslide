@@ -11,8 +11,10 @@
 const EventEmitter = require('events');
 const WebpackDevServer = require('webpack-dev-server');
 const copyGlobs = require('./fs/copyGlobs');
+const colors = require('colors');
 const fs = require('fs');
 const globby = require('globby');
+const indent = require('./utils/indent');
 const initPlugins = require('./initPlugins');
 const initTransforms = require('./initTransforms');
 const opener = require('opener');
@@ -29,20 +31,23 @@ const webpack = require('webpack');
 class Builder extends EventEmitter {
   _getLogger() {
     return {
-      start: task => {
-        this.emit('start', {task});
+      start: (task, message) => {
+        this.emit('start', {task, message});
       },
-      stop: task => {
-        this.emit('stop', {task});
+      stop: (task, message) => {
+        this.emit('stop', {task, message});
       },
       info: (task, message) => {
         this.emit('info', {task, message});
       },
-      error: (task, error) => {
-        this.emit('error', {task, error});
+      error: (task, message) => {
+        this.emit('error', {task, message});
       },
-      warn: (task, warning) => {
-        this.emit('warning', {task, warning});
+      warn: (task, message) => {
+        this.emit('warning', {task, message});
+      },
+      clear: () => {
+        this.emit('clear');
       },
     };
   }
@@ -57,47 +62,61 @@ class Builder extends EventEmitter {
     return {exerslideConfig, webpackConfig};
   }
 
-  _prepare(exerslideConfig, webpackConfig) {
+  _prepare(exerslideConfig, webpackConfig, logger) {
     initSlideFile(exerslideConfig, webpackConfig);
     initPlugins(exerslideConfig, webpackConfig);
     initTransforms(exerslideConfig, webpackConfig);
+
+    const relativeOutPath = getRelativeOutDirectory(
+      exerslideConfig,
+      webpackConfig
+    );
+    logger.info(
+      '',
+      `Generating presentation into ${colors.cyan(relativeOutPath)} ...\n`
+    );
   }
 
-  build(env) {
+  build(env, options) {
     const configs = this._getConfigs(env);
     const logger = this._getLogger();
 
-    this._prepare(configs.exerslideConfig, configs.webpackConfig);
+    // Generate slide files, load plugins and transforms
+    this._prepare(configs.exerslideConfig, configs.webpackConfig, logger);
 
     return Promise.all([
       copyStatics(configs.exerslideConfig, configs.webpackConfig, logger),
-      bundle(configs.exerslideConfig, configs.webpackConfig, logger),
+      bundle(configs.exerslideConfig, configs.webpackConfig, logger, options),
     ]);
   }
 
-  watch(env) {
+  watch(env, options) {
     const configs = this._getConfigs(env);
     const logger = this._getLogger();
+    logger.clear();
 
     configs.webpackConfig.watch = true;
-    this._prepare(configs.exerslideConfig, configs.webpackConfig);
+    // Generate slide files, load plugins and transforms
+    this._prepare(configs.exerslideConfig, configs.webpackConfig, logger);
 
     return Promise.all([
       copyStatics(configs.exerslideConfig, configs.webpackConfig, logger),
-      bundle(configs.exerslideConfig, configs.webpackConfig, logger),
+      bundle(configs.exerslideConfig, configs.webpackConfig, logger, options),
       watchSlides(configs.exerslideConfig, configs.webpackConfig, logger),
     ]);
   }
 
-  serve(env, port) {
+  serve(env, options) {
     const configs = this._getConfigs(env);
     const logger = this._getLogger();
+    logger.clear();
 
-    this._prepare(configs.exerslideConfig, configs.webpackConfig);
+    // Generate slide files, load plugins and transforms
+    this._prepare(configs.exerslideConfig, configs.webpackConfig, logger);
 
     return Promise.all([
       copyStatics(configs.exerslideConfig, configs.webpackConfig, logger),
-      serve(port, configs.exerslideConfig, configs.webpackConfig, logger),
+      serve(configs.exerslideConfig, configs.webpackConfig, logger, options),
       watchSlides(configs.exerslideConfig, configs.webpackConfig, logger),
     ]);
   }
@@ -158,14 +177,21 @@ function initSlideFile(exerslideConfig, webpackConfig) {
  */
 function copyStatics(exerslideConfig, webpackConfig, logger) {
   const id = 'copy statics';
-  logger.start(id);
+  const relativeOutPath = getRelativeOutDirectory(
+    exerslideConfig,
+    webpackConfig
+  );
+  logger.start(
+    id,
+    `Copying files into ${colors.cyan(relativeOutPath)} ...`
+  );
   return copyGlobs(
     exerslideConfig.assets,
     exerslideConfig.out,
     webpackConfig.context
   )
   .then(
-    () => logger.stop(id),
+    () => logger.stop(id, 'Done copying files.'),
     error => logger.error(id, error)
   );
 
@@ -174,48 +200,42 @@ function copyStatics(exerslideConfig, webpackConfig, logger) {
 /**
  * Start webpack to bundle and copy all JavaScript, CSS and other files.
  */
-function bundle(exerslideConfig, webpackConfig, logger) {
+function bundle(exerslideConfig, webpackConfig, logger, options) {
   const id = 'bundler';
 
-  logger.start(id);
+  logger.start(id, 'Generating presentation...');
   return new Promise(resolve => {
-    webpack(webpackConfig, function(err, stats) {
+    const compiler = webpack(webpackConfig, function(err, stats) {
       if (err) {
+        logger.error(id, colors.red('Presentation generation failed!'));
         logger.error(id, err);
         return;
       }
-      if (stats.hasErrors()) {
-        stats.compilation.errors.forEach(error => {
-          if (!error.module) {
-            logger.error(id, `Unknown error: ${error.message}\n`);
-            return;
-          }
-          const relativePath = path.relative(
-            webpackConfig.context,
-            error.module.resource
-          );
-          logger.error(id, `In file "${relativePath}":\n${error.message}\n`);
-        });
+      if (options.verbose) {
+        logger.info(id, stats.toString());
+        return;
       }
-      if (stats.hasWarnings()) {
-        stats.compilation.warnings.forEach(warning => {
-          if (!warning.module) {
-            logger.warn(id, `Unknown warning: ${warning.message}\n`);
-          }
-          const relativePath = path.relative(
-            webpackConfig.context,
-            warning.module.resource
-          );
-          logger.warn(id, `In file "${relativePath}":\n${warning.message}\n`);
-        });
+
+      if (stats.hasErrors() || stats.hasWarnings()) {
+        logWebpackErrors(id, webpackConfig, stats, logger);
+        return;
       }
       if (!webpackConfig.watch) {
-        logger.stop(id);
+        logger.stop(
+          id,
+          colors.green('Presentation successfully created!')
+        );
         resolve();
       } else {
-        logger.info(id, 'updated...');
+        logger.info(id, colors.green('Presentation successfully updated!'));
       }
     });
+    if (webpackConfig.watch) {
+      compiler.compiler.plugin('invalid', () => {
+        logger.clear();
+        logger.info(id, 'Change detected, updating presentation...');
+      });
+    }
   });
 }
 
@@ -248,18 +268,53 @@ function patchEntry(config, port) {
 /**
  * Starts webpack-dev-server and opens the default browser.
  */
-function serve(port, exerslideConfig, webpackConfig, logger) {
+function serve(exerslideConfig, webpackConfig, logger, options) {
   const id = 'devserver';
 
-  logger.start(id);
+  logger.start(id, 'Starting server and generating presentation...');
   return new Promise(() => {
-    patchEntry(webpackConfig, port);
+    patchEntry(webpackConfig, options.port);
     const compiler = webpack(webpackConfig);
+
+    // verbose means we show webpack's raw output. Otherwise we should a more
+    // friendly output
+    if (!options.verbose) {
+      compiler.plugin('invalid', () => {
+        logger.clear();
+        logger.info(id, 'Change detected, updating presentation...');
+      });
+
+      compiler.plugin('done', stats => {
+        if (stats.hasErrors() || stats.hasWarnings()) {
+          logWebpackErrors(id, webpackConfig, stats, logger);
+          return;
+        }
+
+        logger.info(id, colors.green('Presentation succesfully updated.'));
+        logger.info(
+          id,
+          'The presentation is running at\n\n' +
+          `  ${colors.cyan(`http://localhost:${options.port}/`)} \n\n` +
+          'To create a production version, run "exerslide build".'
+        );
+      });
+    }
+
     const server = new WebpackDevServer(compiler, {
+      // Serve static files from here
       contentBase: exerslideConfig.out,
+      publicPath: webpackConfig.output.publicPath,
+      quiet: !options.verbose,
+      watchOptions: {
+        // Don't watch node_modules files, except exerslide packages.
+        // That makes local development of exerslide easier.
+        ignored: /node_modules\/(?!exerslide)/,
+      },
     });
-    server.listen(port, function() {
-      opener(`http://localhost:${port}`);
+    server.listen(options.port, function() {
+      if (options.openBrowser) {
+        opener(`http://localhost:${options.port}`);
+      }
     });
   });
 }
@@ -277,7 +332,7 @@ function serve(port, exerslideConfig, webpackConfig, logger) {
 function watchSlides(exerslideConfig, webpackConfig, logger) {
   const id = 'slide watcher';
 
-  logger.start(id);
+  logger.start(id, 'Watching slides for changes...');
   return new Promise(() => {
     const watcher = sane(
       webpackConfig.context,
@@ -288,4 +343,63 @@ function watchSlides(exerslideConfig, webpackConfig, logger) {
     watcher.on('add', () => writeSlideFile(exerslideConfig));
     watcher.on('delete', () => writeSlideFile(exerslideConfig));
   });
+}
+
+function logWebpackErrors(id, webpackConfig, stats, logger) {
+  if (stats.hasErrors()) {
+    logger.error(
+      id,
+      colors.red('Presentation generation failed!\nList of errors:')
+    );
+    stats.compilation.errors.forEach(
+      error => logger.error(id, formatWebpackError(error, webpackConfig))
+    );
+    return;
+  }
+
+  if (stats.hasWarnings()) {
+    logger.warn(
+      id,
+      colors.yellow('Presentation generated with warnings!')
+    );
+    logger.warn(
+      id,
+      colors.yellow('List of warnings:')
+    );
+    stats.compilation.warnings.forEach(
+      error => logger.warn(id, formatWebpackError(error, webpackConfig))
+    );
+    return;
+  }
+}
+
+function formatWebpackError(error, webpackConfig) {
+  const message = cleanWebpackErrorMessage(error.message || error);
+  if (!error.module) {
+    return message + '\n';
+  }
+  const relativePath = path.relative(
+    webpackConfig.context,
+    error.module.resource
+  );
+
+  return `\nIn file ${colors.cyan(`"${relativePath}"`)}:\n` +
+    indent(message, '  ');
+}
+
+function cleanWebpackErrorMessage(message) {
+  return message
+    .replace(/^Error: Child compilation failed:\s*(.+?)in \//, '$1')
+    .replace(/^Module build failed: /, '')
+    .replace(
+      /^Module not found: Error: (Cannot resolve module '[^']+').*$/,
+      '$1'
+    );
+}
+
+function getRelativeOutDirectory(exerslideConfig, webpackConfig) {
+  return path.relative(
+    webpackConfig.context,
+    exerslideConfig.out
+  );
 }

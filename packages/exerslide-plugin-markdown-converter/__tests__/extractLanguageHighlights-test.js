@@ -48,7 +48,7 @@ describe('extractLanguageHighlights', () => {
       languages,
       '```foo\ncode\n```\n\n```markdown\ntext\n```',
       (errors, output, actions) => {
-        expect(errors).to.contain('foo');
+        expect(errors.join('')).to.contain('foo');
         expect(actions[0].type).to.equal('prefix');
         expect(actions[0].value).to.contain('"markdown": require("./bar")');
         expect(actions[0].value).to.not.contain('"foo": require(');

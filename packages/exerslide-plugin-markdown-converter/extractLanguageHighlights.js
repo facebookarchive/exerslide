@@ -24,7 +24,7 @@ module.exports = function(config) {
         codeFenceRegex.lastIndex = 0;
         const actions = [];
         const languages = new Set();
-        let error = null;
+        let errors = null;
 
         let match;
         while (match = codeFenceRegex.exec(source)) { // eslint-disable-line no-cond-assign
@@ -41,13 +41,12 @@ module.exports = function(config) {
           },
           {}
         );
-        const missingLanguages = Array.from(languages).filter(
-          name => !foundLanguages[name]
-        );
-        if (missingLanguages.length > 0) {
-          error =
-            `SyntaxHighlighter: Missing languages (${missingLanguages.join()}).`;
-        }
+        errors = Array.from(languages)
+          .filter(name => !foundLanguages[name])
+          .map(
+            name => `Cannot find a syntax highlighter for language "${name}".`
+          );
+
         if (Object.keys(foundLanguages).length > 0) {
           const obj = Object.keys(foundLanguages).map(
             name => `${JSON.stringify(name)}: ` +
@@ -57,7 +56,7 @@ module.exports = function(config) {
             transformHelper.getPrefixAction(`require(${helperPath})({${obj}});`)
           );
         }
-        next(error, source, actions);
+        next(errors, source, actions);
       },
     };
   };

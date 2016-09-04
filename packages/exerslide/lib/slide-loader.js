@@ -123,6 +123,15 @@ function runTransforms(webpack, transforms, content, done) {
       if (!afterTransforms) {
         afterTransforms = true;
         const slide = toSlideObject(data, api);
+        if (slide.options && slide.options.layout === '__ExerslideError__') {
+          webpack.emitWarning(
+            (slide.options.title.indexOf('YAML') > -1 ?
+             'YAML parse error: ' :
+             ''
+            ) +
+            slide.options.layout_data.error.message
+          );
+        }
         process.nextTick(() => next(0, slide));
       } else {
         done(data, actions);
@@ -133,7 +142,14 @@ function runTransforms(webpack, transforms, content, done) {
           if (!Array.isArray(errors)) {
             errors = [errors];
           }
-          errors.forEach(error => webpack.emitWarning(error.message || error));
+          if (errors.length) {
+            webpack.emitWarning(
+              // Bundle all errors into a single one
+              errors
+                .map(error => error.message || error)
+                .join('\n')
+            );
+          }
         }
         if (newActions) {
           actions.push.apply(actions, newActions);
@@ -164,4 +180,3 @@ function assign(obj, path, value) {
   }
   obj[lastProp] = value;
 }
-

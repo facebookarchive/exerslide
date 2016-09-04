@@ -47,10 +47,6 @@ exports.launch = function(callback) {
   });
 };
 
-function logWarning(msg) {
-  process.stderr.write(colors.yellow(colors.bold('Warning ') + msg + '\n'));
-}
-
 function logError(msg) {
   process.stderr.write(colors.red(colors.bold('Error ') + msg + '\n'));
 }
@@ -65,23 +61,11 @@ exports.log = log;
  * Outputs events from the builder to the console.
  */
 exports.logEvents = function logEvents(builder) {
-  builder.on('start', function(e) {
-    log(`Starting '${colors.cyan(e.task)}' ...`);
-  });
+  ['start', 'stop', 'info', 'error', 'warning'].forEach(
+    event => builder.on(event, e => log(e.message))
+  );
 
-  builder.on('stop', function(e) {
-    log(`Finished '${colors.cyan(e.task)}'`);
-  });
-
-  builder.on('info', function(e) {
-    log(`'${colors.cyan(e.task)}': ${e.message}`);
-  });
-
-  builder.on('error', function(e) {
-    logError(`in ${colors.cyan(e.task)}: ${e.error.toString()}`);
-  });
-
-  builder.on('warning', function(e) {
-    logWarning(`in ${colors.cyan(e.task)}: ${e.warning.toString()}`);
+  builder.on('clear',  function clearConsole() {
+    process.stdout.write('\x1bc');
   });
 };
