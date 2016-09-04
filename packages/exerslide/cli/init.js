@@ -18,13 +18,24 @@
 'use strict';
 
 exports.command = 'init [name]';
-exports.builder = {};
+exports.builder = {
+  verbose: {
+    alias: ['v'],
+    boolean: true,
+    describe: 'Show the `npm install` output.',
+    default: false,
+  },
+};
 exports.describe = 'copies the default files and installs required dependencies. See also "copy-defaults"';
 exports.handler = function(argv) {
   const utils = require('./utils');
   copyFiles(argv)
-    .then(installDependencies)
+    .then(() => installDependencies(argv))
     .catch(error => {
+      if (/^There seems to be/.test(error.message)) {
+        utils.logError(error.message);
+        return;
+      }
       utils.logError(`An unexpected error occured: "${error.message}"`);
     });
 };
@@ -42,9 +53,10 @@ function copyFiles(argv) {
   });
 }
 
-function installDependencies() {
+function installDependencies(argv) {
   const childProcess = require('child_process');
   const utils = require('./utils');
+  const colors = require('colors');
 
   return new Promise((resolve, reject) => {
     utils.log('Installing dependencies (`npm install`)...');
@@ -52,22 +64,29 @@ function installDependencies() {
       'npm',
       ['install'],
       {
-        stdio: 'inherit',
+        stdio:argv.verbose ? 'inherit' : 'ignore',
       }
     );
 
     npm.on('exit', code => {
       if (code === 0) {
         utils.log(
-          'Everything is good to go! Use `exerslide [build|watch|serve]` ' +
-          'to build the presentation.'
+          colors.green([
+            'Everything is good to go! Next steps: ',
+            '',
+            '  1. Edit slides inside the "slides/" folder.',
+            '  2. Run `exerslide build` to create the presentation.',
+            '',
+            'You can also run `exerslide serve` first, which starts a local ' +
+            'webserver, opens your browser and automatically updates the ' +
+            'presentation as you edit the slides.',
+          ].join('\n'))
         );
         resolve();
       } else {
         reject(new Error(
           'There seems to be a problem with installing the dependcies. ' +
-          'Check the output of `npm install` above, fix any problems and try ' +
-          'running `npm install` yourself.'
+          'Try running `npm install` yourself.'
         ));
       }
     });
