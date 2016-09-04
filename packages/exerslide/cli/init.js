@@ -29,7 +29,7 @@ exports.builder = {
 exports.describe = 'copies the default files and installs required dependencies. See also "copy-defaults"';
 exports.handler = function(argv) {
   const utils = require('./utils');
-  copyFiles(argv)
+  copyFiles()
     .then(() => installDependencies(argv))
     .catch(error => {
       if (/^There seems to be/.test(error.message)) {
@@ -40,11 +40,11 @@ exports.handler = function(argv) {
     });
 };
 
-function copyFiles(argv) {
+function copyFiles() {
   const scaffolder = require('../lib/scaffolder');
 
   return new Promise((resolve, reject) => {
-    scaffolder(process.cwd(), argv, error => {
+    scaffolder(process.cwd(), {confirm: true}, error => {
       if (error) {
         reject(error);
       }

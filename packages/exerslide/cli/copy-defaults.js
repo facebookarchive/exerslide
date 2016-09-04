@@ -25,12 +25,20 @@ exports.builder = function(yargs) {
         requiresArg: true,
         type: 'string',
       },
-      force: {
-        alias: ['f'],
+      'overwrite-all': {
+        alias: ['a'],
         describe: 'Overwrite existing files (DANGER: Only use this option if you '+
             'have a backup of your current files or use a version control system',
         type: 'boolean',
         default: false,
+      },
+      confirm: {
+        alias: ['c'],
+        describe:
+          'Ask what to do if file already exists. ' +
+          'If set to false, keep the existing file.',
+        type: 'boolean',
+        default: true,
       },
     })
     .example('$0 copy-files --name myPresentation');
