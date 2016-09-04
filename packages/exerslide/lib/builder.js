@@ -24,6 +24,9 @@ const sane = require('sane');
 const temp = require('temp').track();
 const webpack = require('webpack');
 
+// Used to test exerslide by building the website
+const smokeTest = process.argv.some(arg => arg === '--smoke-test');
+
 /**
  * The Builder class kicks off all the different ways of building the
  * presentation (build, watch, serve) and emits events about the current status.
@@ -220,6 +223,9 @@ function bundle(exerslideConfig, webpackConfig, logger, options) {
         logWebpackErrors(id, webpackConfig, stats, logger);
         return;
       }
+      if (smokeTest) {
+        process.exit(0);
+      }
       if (!webpackConfig.watch) {
         logger.stop(
           id,
@@ -288,6 +294,9 @@ function serve(exerslideConfig, webpackConfig, logger, options) {
         if (stats.hasErrors() || stats.hasWarnings()) {
           logWebpackErrors(id, webpackConfig, stats, logger);
           return;
+        }
+        if (smokeTest) {
+          process.exit(0);
         }
 
         logger.info(id, colors.green('Presentation succesfully updated.'));

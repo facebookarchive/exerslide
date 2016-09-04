@@ -25,3 +25,12 @@ for pkg in $PACKAGES; do
 
   popd > /dev/null
 done
+
+# Build example as smoke test
+pushd ./example
+echo "exerslide build"
+exerslide build --smoke-test &> /dev/null
+echo "exerslide watch"
+exerslide watch --smoke-test &> /dev/null
+echo "exerslide serve"
+exerslide serve --no-open-browser --smoke-test &> /dev/null

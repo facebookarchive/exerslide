@@ -13,6 +13,9 @@ const colors = require('colors/safe');
  * Various helper functions for the commands.
  */
 
+// Used to test exerslide by building the website
+const smokeTest = process.argv.some(arg => arg === '--smoke-test');
+
 /**
  * The different commands need access to the exerslide configuration file.
  * We use liftoff to find it.
@@ -33,7 +36,7 @@ function assertLocalConfig(env) {
   if (!env.configPath) {
     process.stderr.write(
       colors.red(
-        `Unable to find exerslide.config.js. You need to run "${process.argv[1]} copy-defaults && npm install" first`
+        `Unable to find exerslide.config.js.\nYou need to run "exerslide init" first.\n`
       )
     );
     process.exit(1);
@@ -47,10 +50,10 @@ exports.launch = function(callback) {
   });
 };
 
-function logError(msg) {
-  process.stderr.write(colors.red(colors.bold('Error ') + msg + '\n'));
-}
-exports.logError = logError;
+exports.logError = smokeTest ?
+  () => process.exit(1) :
+  msg => process.stderr.write(colors.red(colors.bold('Error ') + msg + '\n'));
+
 
 function log(msg) {
   process.stdout.write(msg + '\n');
@@ -61,6 +64,11 @@ exports.log = log;
  * Outputs events from the builder to the console.
  */
 exports.logEvents = function logEvents(builder) {
+  if (smokeTest) {
+    ['error', 'warning'].forEach(
+      event => builder.on(event, () => process.exit(1))
+    );
+  }
   ['start', 'stop', 'info', 'error', 'warning'].forEach(
     event => builder.on(event, e => log(e.message))
   );
