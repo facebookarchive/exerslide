@@ -19,29 +19,38 @@ function publishInternal(event, data) {
 }
 
 /**
- * Every slide is rendered through this component (without layout or not).
+ * Every slide is rendered through this component (without layout or not). It
+ * contains logic that must be execute for every slide, such as rendering the
+ * custom styles.
  *
- * This component contains logic that must be execute for every slide:
- *
- *   - It adds and removes the custom style declarations per slide
- *   - It analyzes the height of the content and shows an alert for screen
- *     readers if there is more content than there is space on the screen.
- *
+ * Note that this component could also be used to render a slide object other
+ * than the one currently selected. Whether that's the case is determined by
+ * comparing the passed in data with the context data.
  */
 export default class Slide extends React.Component {
   componentDidMount() {
     this._mountStyle();
     this._mountScript();
     this._updateDocumentTitle();
-    publishInternal('SLIDE.DID_MOUNT', this.props);
+    publishInternal('SLIDE.DID_MOUNT', this.getChildContext());
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.slide !== nextProps.slide;
+  shouldComponentUpdate(nextProps, _nextState, nextContext) {
+    const isActive = this._isActive(this.props, this.context);
+    return this.props.slide !== nextProps.slide ||
+      this.props.slideIndex !== nextProps.slideIndex ||
+       // slide becomes active or inactive
+      isActive !== (this.props.slide === nextContext.slide);
+
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.slideIndex !== prevProps.slideIndex) {
+  componentDidUpdate(prevProps, _prevState, prevContext) {
+    const isActive = this._isActive(this.props, this.context);
+    const wasActive = this._isActive(prevProps, prevContext);
+    const childContext = this.getChildContext();
+
+    if (this.props.slideIndex !== prevProps.slideIndex ||
+        isActive !== wasActive) {
       if (this._style) {
         this._style.remove();
         this._style = null;
@@ -50,10 +59,17 @@ export default class Slide extends React.Component {
         this._script.teardown();
         this._script = null;
       }
+      if (wasActive) {
+        publishInternal('SLIDE.INACTIVE', childContext);
+      }
+
       this._mountStyle();
       this._mountScript();
-      this._updateDocumentTitle();
-      publishInternal('SLIDE.DID_UPDATE', this.context);
+      if (isActive) {
+        this._updateDocumentTitle();
+        publishInternal('SLIDE.ACTIVE', childContext);
+      }
+      publishInternal('SLIDE.DID_UPDATE', childContext);
     }
   }
 
@@ -66,8 +82,22 @@ export default class Slide extends React.Component {
       this._script.teardown();
       this._script = null;
     }
-    global.document.title = documentTitlePrefix;
-    publishInternal('SLIDE.WILL_UNMOUNT', this.props);
+    if (this._isActive(this.props, this.context)) {
+      global.document.title = documentTitlePrefix;
+    }
+    publishInternal('SLIDE.WILL_UNMOUNT', this.getChildContext());
+  }
+
+  getChildContext() {
+    return {
+      slide: this.props.slide,
+      slideIndex: this.props.slideIndex,
+      slides: this.context.slides,
+    };
+  }
+
+  _isActive(props, context) {
+    return props.slideIndex === context.slideIndex;
   }
 
   _updateDocumentTitle() {
@@ -120,12 +150,13 @@ export default class Slide extends React.Component {
   }
 
   render() {
-    const {slide, slideLayout} = this.props;
+    const {slide, slideIndex, slideLayout} = this.props;
     const {options, layout} = this.props.slide;
+    const idSuffix = '-' + (options.id || slideIndex);
     const title = options.title ?
       <h1
-        id="exerslide-slide-title"
-        className="title"
+        id={`exerslide-slide-title${idSuffix}`}
+        className="exerslide-slide-title"
         tabIndex={0}>
         {options.title}
       </h1> :
@@ -142,7 +173,7 @@ export default class Slide extends React.Component {
             title,
             content: slide.content,
             layoutData: options.layoutData || {},
-            ...this.context,
+            ...this.getChildContext(),
           }
         ),
       ];
@@ -152,20 +183,26 @@ export default class Slide extends React.Component {
         <ContentRenderer value={slide.content} />,
       ];
     }
+    const isActive = this._isActive(this.props, this.context);
 
     // Wrap the content inside the base slide layout
     content = React.createElement(
       slideLayout,
-      {},
+      {
+        slide,
+        slideIndex,
+        isActive,
+      },
       ...content
     );
 
     return (
       <div
-        id='exerslide-slide'
-        role='main'
-        aria-label='Slide:'
-        aria-labelledby='exerlide-slide exerlide-slide-title'>
+        id={`exerslide-slide${idSuffix}`}
+        aria-label={'Slide:'}
+        aria-labelledby={`exerslide-slide${idSuffix} exerslide-slide-title${idSuffix}`}
+        role={isActive ? 'main' : null}
+        className='exerslide-slide'>
         {content}
       </div>
     );
@@ -174,15 +211,49 @@ export default class Slide extends React.Component {
 
 Slide.propTypes = {
   /**
-   * The current slide object to render.
+   * The slide object to render.
    */
   slide: React.PropTypes.object.isRequired,
   /**
-   * The index of the slide.
+   * The index of the slide that is rendered.
    */
   slideIndex: React.PropTypes.number.isRequired,
   /**
    * The generic layout to use to render this slide.
    */
   slideLayout: React.PropTypes.func.isRequired,
+};
+
+Slide.contextTypes = {
+  /**
+   * The current (i.e. active) slide object.
+   */
+  slide: React.PropTypes.object.isRequired,
+  /**
+   * The index of the active slide.
+   */
+  slideIndex: React.PropTypes.number.isRequired,
+  /**
+   * The index of the active slide.
+   */
+  slides: React.PropTypes.arrayOf(React.PropTypes.object),
+};
+
+/**
+ * We are going to override whatever context values we get from the root with
+ * the data received via props so that descendants work with the correct data.
+ */
+Slide.childContextTypes = {
+  /**
+   * The current (i.e. active) slide object.
+   */
+  slide: React.PropTypes.object.isRequired,
+  /**
+   * The index of the active slide.
+   */
+  slideIndex: React.PropTypes.number.isRequired,
+  /**
+   * The index of the active slide.
+   */
+  slides: React.PropTypes.arrayOf(React.PropTypes.object),
 };

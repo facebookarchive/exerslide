@@ -10,6 +10,10 @@ import {EventEmitter} from 'events';
 
 const emitter = new EventEmitter();
 
+// The default limit is 10. There is no reason to restrict the number of
+// listeners
+emitter.setMaxListeners(Infinity);
+
 export const publish = emitter.emit.bind(emitter);
 
 export function subscribe(...args) {
