@@ -33,15 +33,15 @@ export default function scaledContentPlugin(exerslide, options={}) {
     'SITE.LOADED',
     ({slides}) => {
       const firstSlideOptions = slides[0] && slides[0].options;
-      const shouldScale = firstSlideOptions && !firstSlideOptions.scale ||
-        options !== false;
+      const shouldScale =  options !== false &&
+        (!firstSlideOptions || firstSlideOptions.scale !== false);
 
       if (shouldScale) {
         options = firstSlideOptions && firstSlideOptions.scale || options;
 
         scaleFont(
           global.document.documentElement,
-          clone(defaultScaleOptions, options)
+          {...defaultScaleOptions,... options}
         );
 
         exerslide.registerExtension(
@@ -62,10 +62,6 @@ const defaultScaleOptions = {
 
 let memorizedContentWidth;
 
-function clone(...objs) {
-  return Object.assign({}, ...objs);
-}
-
 function getContentWidthStyle() {
   return memorizedContentWidth ? {maxWidth: memorizedContentWidth + 'em'} : {};
 }
@@ -77,15 +73,15 @@ function getContentWidthStyle() {
  */
 function scaleFont(element, {contentWidth, maxFontSize, columnWidth}) {
   memorizedContentWidth = contentWidth;
-  const initialfontSize = parseInt(
+  const initialFontSize = parseInt(
     global.getComputedStyle(element).fontSize,
     10
   );
-  const realContentWidth = initialfontSize * contentWidth;
+  const realContentWidth = initialFontSize * contentWidth;
   const viewportWidth = element.clientWidth;
   if (realContentWidth <= viewportWidth) {
     let newFontSize = (viewportWidth * columnWidth) / contentWidth;
-    if (newFontSize < initialfontSize) {
+    if (newFontSize < initialFontSize) {
       newFontSize = '';
     } else if (maxFontSize && newFontSize > maxFontSize) {
       newFontSize = maxFontSize + 'px';
@@ -114,7 +110,7 @@ function ScaledContentWidth(props) {
     child,
     {
       ...restProps,
-      style: clone(style, getContentWidthStyle()),
+      style: {...style, ...getContentWidthStyle()},
     }
   );
 }
