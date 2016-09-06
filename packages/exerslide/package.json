@@ -20,8 +20,6 @@
     "diff": "^2.2.1",
     "editor": "^1.0.0",
     "front-matter": "^2.0.5",
-    "glob": "^7.0.0",
-    "glob2base": "0.0.12",
     "globby": "^6.0.0",
     "inquirer": "^1.1.2",
     "is-text-path": "^1.0.1",

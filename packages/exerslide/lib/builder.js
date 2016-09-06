@@ -10,7 +10,6 @@
 
 const EventEmitter = require('events');
 const WebpackDevServer = require('webpack-dev-server');
-const copyGlobs = require('./fs/copyGlobs');
 const colors = require('colors');
 const fs = require('fs');
 const globby = require('globby');
@@ -65,19 +64,10 @@ class Builder extends EventEmitter {
     return {exerslideConfig, webpackConfig};
   }
 
-  _prepare(exerslideConfig, webpackConfig, logger) {
+  _prepare(exerslideConfig, webpackConfig) {
     initSlideFile(exerslideConfig, webpackConfig);
     initPlugins(exerslideConfig, webpackConfig);
     initTransforms(exerslideConfig, webpackConfig);
-
-    const relativeOutPath = getRelativeOutDirectory(
-      exerslideConfig,
-      webpackConfig
-    );
-    logger.info(
-      '',
-      `Generating presentation into ${colors.cyan(relativeOutPath)} ...\n`
-    );
   }
 
   build(env, options) {
@@ -85,12 +75,14 @@ class Builder extends EventEmitter {
     const logger = this._getLogger();
 
     // Generate slide files, load plugins and transforms
-    this._prepare(configs.exerslideConfig, configs.webpackConfig, logger);
+    this._prepare(configs.exerslideConfig, configs.webpackConfig);
 
-    return Promise.all([
-      copyStatics(configs.exerslideConfig, configs.webpackConfig, logger),
-      bundle(configs.exerslideConfig, configs.webpackConfig, logger, options),
-    ]);
+    return bundle(
+      configs.exerslideConfig,
+      configs.webpackConfig,
+      logger,
+      options
+    );
   }
 
   watch(env, options) {
@@ -100,10 +92,9 @@ class Builder extends EventEmitter {
 
     configs.webpackConfig.watch = true;
     // Generate slide files, load plugins and transforms
-    this._prepare(configs.exerslideConfig, configs.webpackConfig, logger);
+    this._prepare(configs.exerslideConfig, configs.webpackConfig);
 
     return Promise.all([
-      copyStatics(configs.exerslideConfig, configs.webpackConfig, logger),
       bundle(configs.exerslideConfig, configs.webpackConfig, logger, options),
       watchSlides(configs.exerslideConfig, configs.webpackConfig, logger),
     ]);
@@ -115,10 +106,9 @@ class Builder extends EventEmitter {
     logger.clear();
 
     // Generate slide files, load plugins and transforms
-    this._prepare(configs.exerslideConfig, configs.webpackConfig, logger);
+    this._prepare(configs.exerslideConfig, configs.webpackConfig);
 
     return Promise.all([
-      copyStatics(configs.exerslideConfig, configs.webpackConfig, logger),
       serve(configs.exerslideConfig, configs.webpackConfig, logger, options),
       watchSlides(configs.exerslideConfig, configs.webpackConfig, logger),
     ]);
@@ -175,38 +165,19 @@ function initSlideFile(exerslideConfig, webpackConfig) {
 }
 
 /**
- * Copies all files matching the patterns specified in exerslide.config.js.
- * Those are usually not handled by webpack.
+ * Start webpack to bundle and copy all JavaScript, CSS and other files.
  */
-function copyStatics(exerslideConfig, webpackConfig, logger) {
-  const id = 'copy statics';
+function bundle(exerslideConfig, webpackConfig, logger, options) {
+  const id = 'bundler';
   const relativeOutPath = getRelativeOutDirectory(
     exerslideConfig,
     webpackConfig
   );
   logger.start(
     id,
-    `Copying files into ${colors.cyan(relativeOutPath)} ...`
-  );
-  return copyGlobs(
-    exerslideConfig.assets,
-    exerslideConfig.out,
-    webpackConfig.context
-  )
-  .then(
-    () => logger.stop(id, 'Done copying files.'),
-    error => logger.error(id, error)
+    `Generating presentation in "${colors.cyan(relativeOutPath)}" ...`
   );
 
-}
-
-/**
- * Start webpack to bundle and copy all JavaScript, CSS and other files.
- */
-function bundle(exerslideConfig, webpackConfig, logger, options) {
-  const id = 'bundler';
-
-  logger.start(id, 'Generating presentation...');
   return new Promise(resolve => {
     const compiler = webpack(webpackConfig, function(err, stats) {
       if (err) {
@@ -276,8 +247,16 @@ function patchEntry(config, port) {
  */
 function serve(exerslideConfig, webpackConfig, logger, options) {
   const id = 'devserver';
+  const relativeOutPath = getRelativeOutDirectory(
+    exerslideConfig,
+    webpackConfig
+  );
+  logger.start(
+    id,
+    'Starting server and generating presentation in ' +
+    `"${colors.cyan(relativeOutPath)}" ...`
+  );
 
-  logger.start(id, 'Starting server and generating presentation...');
   return new Promise(() => {
     patchEntry(webpackConfig, options.port);
     const compiler = webpack(webpackConfig);

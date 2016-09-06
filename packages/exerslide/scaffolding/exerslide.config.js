@@ -39,13 +39,6 @@ module.exports = {
   },
 
   /**
-   * Files matching these patterns are copied verbatim into the "out" directory.
-   */
-  assets: [
-    './statics/**/*',
-  ],
-
-  /**
    * List of plugins to load. Plugins provide layouts, content type converters,
    * or other extensions to the exerslide or webpack config.
    *

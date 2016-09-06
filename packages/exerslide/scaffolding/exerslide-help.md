@@ -82,9 +82,8 @@ myProject/
   node_modules/
   out/
   slides/
-  statics/
-    index.html
   exerslide.config.js
+  index.html
   package.json
   webpack.config.js
 ```
@@ -100,8 +99,8 @@ myProject/
 - `node_modules/` contains all of the projects dependencies.
 - `out/` is the default folder where the generated presentation is stored.
 - `slides/` is the folder where you put your slides
-- `statics/` contains additional files that should be copied into the output 
-  folder.
+- `exerslide.config.js` Exerslide-specific configuration options
+- `webpack.config.js` Webpack configuration file
 
 
 ## Organize Slides

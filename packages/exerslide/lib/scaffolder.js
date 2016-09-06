@@ -25,7 +25,7 @@ const HASH_PATTERN = /@exerslide-file-hash (\S+)/;
 const SCAFFOLDING_PATH = path.join(__dirname, '../scaffolding');
 const APPLY_TEMPLATE_TO = [
   /package.json$/,
-  /\/statics\//,
+  /index\.html$/,
   /exerslide.config.js$/,
 ];
 

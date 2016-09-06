@@ -14,6 +14,7 @@
 'use strict';
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 const exerslide = require('exerslide');
 const exerslideConfig = require('./exerslide.config');
 const path = require('path');
@@ -28,6 +29,21 @@ const plugins = [
     JSON.stringify(process.env.NODE_ENV || 'development'),
   }),
   new ExtractTextPlugin('[name].css'),
+  new HTMLWebpackPlugin({
+    hash: true,
+    template: './index.html',
+    chunksSortMode: function(a,b) {
+      // styles.css should always come last so that it can overwrite app specfic
+      // rules
+      if (a.names[0] === 'styles') {
+        return 1;
+      }
+      if (b.names[0] === 'styles') {
+        return -1;
+      }
+      return a.names[0].localeCompare(b.names[0]);
+    },
+  }),
 ];
 
 if (PROD) {
@@ -57,6 +73,13 @@ module.exports = {
   },
   module: {
     loaders: [
+      // By default this loader is only applied to the index.html file, not to
+      // HTML slides
+      {
+        test: /index\.html$/,
+        loader: 'html',
+        exclude: /slides\//,
+      },
       {
         test: /\.jsx?$/,
         loader: 'babel',
@@ -95,6 +118,9 @@ module.exports = {
     ],
   },
   plugins: plugins,
+  htmlLoader: {
+    attrs: ['img:src', 'link:href', 'script:src'],
+  },
   slideLoader: {
     transforms: [
       /**
