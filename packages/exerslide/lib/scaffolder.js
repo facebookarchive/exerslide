@@ -26,6 +26,7 @@ const SCAFFOLDING_PATH = path.join(__dirname, '../scaffolding');
 const APPLY_TEMPLATE_TO = [
   /package.json$/,
   /\/statics\//,
+  /exerslide.config.js$/,
 ];
 
 /**
@@ -37,24 +38,31 @@ const APPLY_TEMPLATE_TO = [
  * conflicts if a file already exists and contains different content.
  */
 module.exports = function scaffolder(targetDir, options, done) {
-  let filesToIgnore = [/.eslintrc.yml$/];
-  if (pathExists(path.join(targetDir, 'slides'))) {
-    // slides directory exists, so don't copy the default one
-    filesToIgnore.push(/\/slides\//)
-  }
-  if (pathExists(path.join(targetDir, 'references.yml'))) {
-    filesToIgnore.push(/references.yml$/);
-  }
-
   if (!options.name) {
     // Try to get name from package.json if it exists
     try {
-      const pkg = require(path.join(process.cwd(), 'package.json'));
+      const pkg = require(path.join(targetDir, 'package.json'));
       options.name = pkg.name;
     } catch (err) {
-      //  Do do anything if it doesn't exist
+      // Use the directory name as project name
+      options.name = path.basename(targetDir);
     }
   }
+
+  const filesToIgnore = [/.eslintrc.yml$/];
+  if (pathExists(path.join(targetDir, 'exerslide.config.js'))) {
+    // We already initialized this directory, so we don't need to copy some
+    // files again.
+    filesToIgnore.push(
+      /\/slides\//,
+      /references.yml$/,
+      /css\/style.css$/
+    );
+  }
+
+  const renameMap = {
+    'css/style.css': options.name + '.css',
+  };
 
   function transform(sourcePath, targetPath, contents) {
     contents = contents.toString();
@@ -75,6 +83,7 @@ module.exports = function scaffolder(targetDir, options, done) {
     sourceDir: SCAFFOLDING_PATH,
     targetDir,
     ignorePatterns: filesToIgnore,
+    renameMap,
     transform,
     ask: (sourcePath, targetPath, sourceFileContent) => (
       processFile(sourcePath, targetPath, sourceFileContent, options)

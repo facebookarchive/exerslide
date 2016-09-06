@@ -41,6 +41,7 @@ const EventEmitter = require('events');
  */
 module.exports = function copyDir(options) {
   const ignorePatterns = options.ignorePatterns || [];
+  const renameMap = options.renameMap || {};
   const transform = options.transform;
   const ask = options.ask;
 
@@ -61,7 +62,14 @@ module.exports = function copyDir(options) {
         if (files.length > 0) {
           const file = files.pop();
           const sourcePath = path.join(sourceDir, file);
-          const targetPath = path.join(targetDir, file);
+          const relativeSourcePath = path.relative(
+            options.sourceDir,
+            sourcePath
+          );
+          const targetPath = path.join(
+            targetDir,
+            renameMap[relativeSourcePath] || file
+          );
 
           if (ignorePatterns.some(p => p.test(sourcePath))) {
             next();
@@ -72,6 +80,7 @@ module.exports = function copyDir(options) {
           fs.stat(sourcePath, (error, sourceStats) => {
             if (error) {
               emitError(error);
+              return;
             }
 
             // Collect info about target path
@@ -90,6 +99,7 @@ module.exports = function copyDir(options) {
                 fs.mkdir(targetPath, sourceStats.mode, error => {
                   if (error && error.code !== 'EEXIST') {
                     emitError(error);
+                    return;
                   } else {
                     copyDirImplementation(sourcePath, targetPath, next);
                   }
@@ -164,10 +174,16 @@ module.exports = function copyDir(options) {
 
       function markFileAsUpdated(sourceContents, sourcePath, targetPath) {
         if (!/@exerslide-file-hash/.test(sourceContents)) {
-           emitter.emit('skip', sourcePath);
-           return next();
+          emitter.emit('skip', sourcePath);
+          return next();
         }
         try {
+          const targetContents = fs.readFileSync(targetPath).toString();
+          // If there is no hash in target file we cannot update it
+          if (!/@exerslide-file-hash/.test(targetContents)) {
+            emitter.emit('skip', sourcePath);
+            return next();
+          }
           // We still have to update the hash in the file so that
           // we know we already asked the user about this file
           const updated = updateHash(sourceContents, targetPath);

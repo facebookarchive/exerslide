@@ -332,4 +332,36 @@ describe('copyDir', () => {
     });
   });
 
+  it('renames files', done => {
+    const dirs = {
+      source: {
+        file1: 'file1',
+        dir2: {
+          file1: 'file1',
+        },
+      },
+      target: {},
+    };
+    const dir = testUtils.makeDirectoryStructure(dirs);
+
+    const emitter = copyDir({
+      sourceDir: path.join(dir, '/source'),
+      targetDir: path.join(dir, '/target'),
+      renameMap: {'dir2/file1': 'file2'},
+    });
+
+    emitter.once('finish', () => {
+      testUtils.validateFolderStructure(
+        path.join(dir, '/target'),
+        {
+          file1: 'file1',
+          dir2: {
+            file2: 'file1',
+          },
+        }
+      );
+      done();
+    });
+  });
+
 });

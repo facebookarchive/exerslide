@@ -27,7 +27,8 @@ module.exports = {
     'foundation-sites/dist/foundation.css',
     'font-awesome/css/font-awesome.css',
     'highlight.js/styles/solarized-light.css',
-    './css/style.css',
+    './css/exerslide.css',
+    './css/<%= name %>.css',
   ],
 
   /**

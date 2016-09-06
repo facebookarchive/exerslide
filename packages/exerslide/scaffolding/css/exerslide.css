@@ -1,0 +1,204 @@
+/* @remove-on-copy-start */
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+/* @remove-on-copy-end */
+
+/*
+ * This hash helps exerslide to determine whether the file needs to be updated
+ * or not. Please don't remove it.
+ * @exerslide-file-hash
+ */
+
+/**
+ * Default exerslide style (also see components/css/)
+ *
+ * Feel free to edit this file and adjust it to your needs, but if possible,
+ * create a new CSS file and add it to list of CSS files in exerslide.config.js
+ * instead.
+ *
+ * exerslide tries to provide a minimal set of rules to render the presentation,
+ * so that it is easy to overwrite them.
+ */
+
+html, body {
+  /**
+   * Disables inertia effects 
+   */
+  height: 100%;
+  overflow: hidden;
+  font-family: Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+#exerslide-loader {
+  align-items: center;
+  display: flex;
+  font-size: 4em;
+  height: 100vh;
+  justify-content: center;
+}
+
+#exerslide-page {
+  bottom: 0;
+  display: flex;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* HELPERS */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.flex-item-fix {
+  flex-basis: auto;
+  flex-shrink: 0;
+}
+
+/* CODE */
+
+.exerslide-slide  code,
+.exerslide-slide p > code {
+  background: #f9f9f9;
+}
+
+.exerslide-slide pre + :not(hr) {
+  margin-top: 1rem;
+}
+
+.exerslide-slide pre > code {
+  display: block;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+}
+
+/* MAIN CONTENT */
+
+.exerslide-slide {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  overflow-y: auto;
+  padding: 1rem;
+  position: relative;
+  width: 100%;
+}
+
+.exerslide-slide > * {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  line-height: 1.6;
+  /**
+   * This is the default max width of the slide content. However, since
+   * exerslide allows the content width to be configured via slides, this is
+   * not going to have any effect, unless auto-scaling is disabled completely
+   * (via scale: false in the meta data section of the first slide)
+   *
+   * We cannot just use `width: 45em` because we want the slide to be responsive
+   * when the viewport shrinks.
+   */
+  max-width: 45em;
+  /**
+   * This ensures that slides with little content (i.e. without a full line of
+   * content) are still positioned correclty.
+   */
+  width: 100%;
+}
+
+
+.exerslide-slide h1,
+.exerslide-slide h2,
+.exerslide-slide h3,
+.exerslide-slide h4 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.exerslide-slide h1,
+.exerslide-slide-title {
+  margin-top: 0;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.exerslide-slide h1:focus,
+.exerslide-slide-title:focus {
+  outline: none;
+}
+
+.exerslide-slide h1 {
+  font-size: 1.8rem;
+}
+
+.exerslide-slide h2 {
+  font-size: 1.4rem;
+}
+
+.exerslide-slide h3 {
+  font-size: 1.2rem;
+}
+
+.exerslide-slide h4 {
+  font-size: 1.1rem;
+}
+
+.exerslide-slide h2 + p,
+.exerslide-slide h3 + p,
+.exerslide-slide h4 + p {
+  margin-top: 0.3rem;
+}
+
+/**
+ * Responsive images.
+ */
+.exerslide-slide img {
+  max-width: 100%;
+}
+
+/* MOBILE */
+
+@media(max-width: 768px) {
+  html, body {
+    overflow: auto;
+  }
+
+  /*
+   * Makes navigation bar move to the end of the content instead of sticking to
+   * the bottom of the screen
+   */
+  #exerslide-page {
+    bottom: initial;
+    min-height: 100vh;
+  }
+
+  /* Makes the page look better when the menu is TOC is expanded */
+  #exerslide-main {
+    overflow-x: hidden;
+  }
+}

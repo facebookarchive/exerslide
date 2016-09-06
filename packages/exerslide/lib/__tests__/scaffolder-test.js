@@ -9,30 +9,48 @@
 'use strict';
 
 const expect = require('chai').expect;
+const globby = require('globby');
+const path = require('path');
 const scaffolder = require('../scaffolder');
 const testUtils = require('../../scripts/test-utils');
-const path = require('path');
 
-describe.only('scaffolder', () => {
+const SCAFFOLDING_PATH = path.resolve(__dirname, '../../scaffolding/');
 
-  it('scaffolding files into the directory', done => {
+describe('scaffolder', () => {
+
+  it('copies the files from "scaffolding/" to the out dir', done => {
     const dir = testUtils.makeDirectoryStructure({});
 
     scaffolder(
       dir,
       {name: 'test', confirm: false},
       function() {
-        testUtils.validateFolderStructure(
-          dir,
-          {
-            css: {},
-            js: {},
-            slides: {},
-            'webpack.config.js': '',
-            'exerslide.config.js': '',
-            'package.json': '',
-          }
+        const targetDirFiles = globby.sync(path.join(dir, '**/*'));
+        const scaffoldingFiles =
+          globby.sync(path.join(SCAFFOLDING_PATH, '**/*'))
+          .map(x => x.replace(/style\.css$/, 'test.css'));
+
+        expect(targetDirFiles).to.not.be.empty;
+        expect(targetDirFiles.map(p => p.replace(dir, '')))
+          .to.include.members(
+          scaffoldingFiles.map(p => p.replace(SCAFFOLDING_PATH, ''))
         );
+        done();
+      }
+    );
+  });
+
+  it('does not copy slides folder if it already exists', done => {
+    const dir = testUtils.makeDirectoryStructure({
+      slides: {},
+      'exerslide.config.js': '',
+    });
+
+    scaffolder(
+      dir,
+      {name: 'test', confirm: false},
+      function() {
+        expect(globby.sync(path.join(dir, 'slides/*'))).to.be.empty;
         done();
       }
     );
