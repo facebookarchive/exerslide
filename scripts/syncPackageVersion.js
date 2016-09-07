@@ -7,10 +7,14 @@
  * the root directory of this source tree.
  */
 
+'use strict';
+
 const fs = require('fs');
 const path = require('path');
+const semver = require('semver');
 
 const PACKAGES_ROOT = path.join(__dirname, '../packages');
+const FORCE_UPDATE = process.argv.some(x => x === '--force');
 
 function mapObject(obj, fn) {
   return Object.keys(obj)
@@ -27,7 +31,10 @@ const packages = fs.readdirSync(PACKAGES_ROOT)
 const versions = mapObject(packages, pkg => pkg.version);
 
 // 2. Update the dependencies and devDependencies of every package
-const newPackages = mapObject(packages, pkg => updatePkg(pkg, versions));
+const newPackages = mapObject(
+  packages,
+  pkg => updatePkg(pkg, versions, FORCE_UPDATE)
+);
 
 // 3. Write package.json objects back to disk
 Object.keys(newPackages).forEach(pkgName => {
@@ -45,22 +52,26 @@ const scaffolingPackagePath = path.join(
 );
 fs.writeFileSync(
   scaffolingPackagePath,
-  serializePkg(updatePkg(require(scaffolingPackagePath), versions))
+  serializePkg(
+    updatePkg(require(scaffolingPackagePath), versions, FORCE_UPDATE)
+  )
 );
 
 // -----------
 
-function updatePkg(pkg, versions) {
+function updatePkg(pkg, versions, forceUpdate) {
   ['dependencies', 'peerDependencies'].forEach(depsName => {
     if (!pkg[depsName]) {
       return;
     }
-    pkg[depsName] = mapObject(pkg[depsName], (currentVersion, module) => {
-      if (!versions[module]) {
-        return currentVersion;
+    pkg[depsName] = mapObject(pkg[depsName], (versionRange, dependency) => {
+      if (!versions[dependency] ||
+          !forceUpdate && semver.satisfies(versions[dependency], versionRange)
+      ) {
+        return versionRange;
       }
-      return (/^\d/.test(currentVersion) ? '' : currentVersion.substr(0, 1)) +
-        versions[module];
+      return (/^\d/.test(versionRange) ? '' : versionRange.substr(0, 1)) +
+        versions[dependency];
     });
   });
   return pkg;

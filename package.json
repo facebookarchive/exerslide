@@ -1,0 +1,10 @@
+{
+  "name": "exerslide-root",
+  "private": true,
+  "devDependencies": {
+    "semver": "^5.3.0"
+  },
+  "scripts": {
+    "test": "./scripts/check.sh"
+  }
+}
