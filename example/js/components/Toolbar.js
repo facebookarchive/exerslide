@@ -5,6 +5,11 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+/*
+ * This hash helps exerslide to determine whether the file needs to be updated
+ * or not. Please don't remove it.
+ * @exerslide-file-hash 74fff00dd4ff8f53c43d18c85ed5a6c5
+ */
 
 import React from 'react';
 import ExtensionPoint from 'exerslide/components/ExtensionPoint';

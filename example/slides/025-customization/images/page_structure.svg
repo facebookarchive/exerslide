@@ -35,9 +35,9 @@
                     </text>
                 </g>
                 <g id="Slide-+-Slide" transform="translate(14.000000, 24.698258)">
-                    <text id="Slide-(#exerslide-sl" font-family="Helvetica" font-size="13.8793103" font-weight="normal" fill="#4E5665">
+                    <text id="Slide-(.exerslide-sl" font-family="Helvetica" font-size="13.8793103" font-weight="normal" fill="#4E5665">
                         <tspan x="123.568755" y="74.1545957">Slide</tspan>
-                        <tspan x="86.1630649" y="91.1545957">(#exerslide-slide)</tspan>
+                        <tspan x="88.0945119" y="91.1545957">(.exerslide-slide)</tspan>
                     </text>
                     <use id="Slide" stroke="#979797" mask="url(#mask-4)" stroke-width="2" xlink:href="#path-3"></use>
                 </g>

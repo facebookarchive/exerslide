@@ -46,17 +46,6 @@ that use a specific layout, you can give each slide file the same file
 extension and use this option, instead of specifying the layout in the front 
 matter of each slide.
 
-### `assets`
-
-```javascript
-assets: [
-  './statics/**/*',
-],
-```
-
-An array of file patterns. Files matching these patterns are copied directly 
-into the output folder.
-
 ### `plugins`
 
 ```

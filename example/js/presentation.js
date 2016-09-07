@@ -6,6 +6,12 @@
  * the root directory of this source tree.
  */
 
+/*
+ * This hash helps exerslide to determine whether the file needs to be updated
+ * or not. Please don't remove it.
+ * @exerslide-file-hash 80c94159761ba0652f999efe3f57b517
+ */
+
 /**
  * This is the JavaScript entry point to the presentation.
  * This file allows you to customize some aspects of the presentation, such

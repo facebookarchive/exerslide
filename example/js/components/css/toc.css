@@ -5,6 +5,11 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+/*
+ * This hash helps exerslide to determine whether the file needs to be updated
+ * or not. Please don't remove it.
+ * @exerslide-file-hash 7cbd7fc56d5825b68fa32eee34e5c423
+ */
 
 .exerslide-toc-container {
   background-color: #F4F4F4;
@@ -24,28 +29,28 @@
 }
 
 ol.exerslide-toc-entries,
-ol#exerslide-toc-list {
+ol.exerslide-toc-list {
   list-style: none;
   counter-reset: item;
   overflow-y: auto;
   margin: 0;
 }
 
-ol#exerslide-toc-list {
+.exerslide-toc-list {
   padding-left: 1em;
   padding-right: 1em;
 }
 
-ol.exerslide-toc-entries {
+.exerslide-toc-entries {
   padding-left: 0;
 }
 
-ol#exerslide-toc-list > * {
+.exerslide-toc-list > * {
   margin-bottom: 1em;
 }
 
-#exerslide-toc-title,
-.exerslide-toc-container.collapsed > #exerslide-toc-list {
+.exerslide-toc-title,
+.exerslide-toc-container.collapsed > .exerslide-toc-list {
   display: none;
 }
 
@@ -65,7 +70,7 @@ ol#exerslide-toc-list > * {
   color: inherit;
 }
 
-#toc-list > :first-child {
+.exerslide-toc-list > :first-child {
   margin-top: 0;
 }
 
@@ -80,16 +85,16 @@ ol#exerslide-toc-list > * {
   counter-increment: item;
 }
 
-.exerslide-toc-title {
+.exerslide-toc-heading {
   display: inline-block;
   margin: 0;
   margin-bottom: 0.5em;
 }
 
-#exerslide-toc-list > .exerslide-toc-entry::before,
-#exerslide-toc-list > .exerslide-toc-entry,
+.exerslide-toc-list > .exerslide-toc-entry::before,
+.exerslide-toc-list > .exerslide-toc-entry,
 .exerslide-toc-chapter::before,
-.exerslide-toc-title {
+.exerslide-toc-heading {
   font-weight: bold;
   font-size: 1em;
 }

@@ -6,6 +6,12 @@
  * the root directory of this source tree.
  */
 
+/*
+ * This hash helps exerslide to determine whether the file needs to be updated
+ * or not. Please don't remove it.
+ * @exerslide-file-hash 2fcba59d996e06687a6baae352a5346a
+ */
+
 'use strict';
 
 const isTextPath = require('is-text-path');
@@ -22,7 +28,7 @@ module.exports = {
     'foundation-sites/dist/foundation.css',
     'font-awesome/css/font-awesome.css',
     'highlight.js/styles/solarized-light.css',
-    './css/style.css',
+    './css/exerslide.css',
     './css/homepage.css',
   ],
 
@@ -34,13 +40,7 @@ module.exports = {
   },
 
   /**
-   * Files matching these patterns are copied verbatim into the "out" directory.
-   */
-  assets: [
-    './statics/**/*',
-  ],
 
-  /**
    * List of plugins to load. Plugins provide layouts, content type converters,
    * or other extensions to the exerslide or webpack config.
    *

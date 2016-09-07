@@ -1,13 +1,9 @@
+
+
 /*
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the license found in the LICENSE file in
- * the root directory of this source tree.
- */
-/* This hash helps exerslide to determine whether the file needs to be updated
+ * This hash helps exerslide to determine whether the file needs to be updated
  * or not. Please don't remove it.
- * @exerslide-file-hash 623922cca5b674cd166ff4b904d6f73a
+ * @exerslide-file-hash 11d720c0b82bd803455a897e37e2c81f
  */
 
 /**
@@ -107,7 +103,7 @@ body {
 
 .exerslide-slide > * {
   display: flex;
-  flex: 1;
+  flex: 1 0 auto;
   flex-direction: column;
   line-height: 1.6;
   /**
@@ -122,7 +118,7 @@ body {
   max-width: 45em;
   /**
    * This ensures that slides with little content (i.e. without a full line of
-   * content) are still positioned correclty.
+   * content) are still positioned correctly.
    */
   width: 100%;
 }

@@ -15,7 +15,7 @@ Before we can talk about customization in more detail, lets have a closer look
 at the structure of the HTML document that exerslide produces:
 
 <figure class="center">
-  <img src="./images/anatomy.svg" alt="Wireframe of the HTML document
+  <img src="./images/page_structure.svg" alt="Wireframe of the HTML document
   structure" />
   <figcaption>Wireframe of the HTML document structure</figcaption>
 </figure>
@@ -41,7 +41,7 @@ regions:
   bottom of the main area (bottom of the screen, not content) and contains
   buttons to go the next or previous slide.
 
-- `#exerslide-slide`: Finally, the **slide** area contains the actual content.
+- `.exerslide-slide`: Finally, the **slide** area contains the actual content.
   It covers the remaining available horizontal and vertical space on the page 
   and shows scrollbars if the content does not fit.
 
@@ -121,10 +121,10 @@ This would result in the following HTML:
 </div>
 ```
 
-Don't forget to add your custom stylesheet to the [configuration 
-file](#/exerslide.config.js).
-
 ## Override default styles
 
-Adding a custom stylesheet would also be the way to override any predefined 
-styles by exerslide.
+When a new project is created, exerslide creates an empty CSS file for your 
+rules. You can add them to `css/<projectname>.css` without having to edit any 
+configuration file. However, you can still add more/other custom stylesheets to 
+the [configuration file](#/exerslide.config.js).
+

@@ -5,6 +5,11 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+/*
+ * This hash helps exerslide to determine whether the file needs to be updated
+ * or not. Please don't remove it.
+ * @exerslide-file-hash eaf77b7603e0e0c989660d4049c126ad
+ */
 
 import React from 'react';
 import * as exerslide from 'exerslide/browser';
@@ -140,7 +145,7 @@ export default class TOC extends React.Component {
           <li
             key={chapter[0].options.chapter}
             className={'exerslide-toc-chapter' + (isActive ? ' active' : '')}>
-            <h3 className="exerslide-toc-title">
+            <h3 className="exerslide-toc-heading">
               {chapter[0].options.chapter}
             </h3>
             <ol className="exerslide-toc-entries">{entry}</ol>
@@ -169,7 +174,11 @@ export default class TOC extends React.Component {
       <div
         role="navigation"
         className={'exerslide-toc-container' + (collapsed ? ' collapsed' : '')}>
-        <h2 id="exerslide-toc-title">Table of Contents</h2>
+        <h2
+          id="exerslide-toc-title"
+          className="exerslide-toc-title">
+          Table of Contents
+        </h2>
         {togglable ?
           /* This goes against the code formatting guidelines because VoiceOver
            * is not able to announce this button properly if there is a line
@@ -186,6 +195,7 @@ export default class TOC extends React.Component {
         }
         <ol
           id="exerslide-toc-list"
+          className="exerslide-toc-list"
           aria-controls="main"
           aria-labelledby="exerrslide-toc-title">
           {chapters}

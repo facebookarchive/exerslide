@@ -5,6 +5,11 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+/*
+ * This hash helps exerslide to determine whether the file needs to be updated
+ * or not. Please don't remove it.
+ * @exerslide-file-hash 3aba580a7e029d6b5fc9cd141f19e49a
+ */
 
 .exerslide-toolbar {
   box-sizing: border-box;

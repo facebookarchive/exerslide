@@ -7,9 +7,7 @@
     "codemirror": "^5.7.0",
     "font-awesome": "^4.4.0",
     "foundation-sites": "^6.1.2",
-    "html-loader": "^0.4.3",
     "markdown-it-container": "^2.0.0",
-    "raw-loader": "^0.5.1",
     "react": "^15.0.0",
     "react-dom": "^15.0.0"
   },
@@ -25,10 +23,13 @@
     "css-loader": "^0.23.0",
     "extract-text-webpack-plugin": "^0.9.1",
     "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.22.0",
     "is-text-path": "^1.0.1",
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "yaml-loader": "^0.4.0"
-  }
+  },
+  "exerslide": "@exerslide-file-hash 1dc2d7bb24b8759d4ba2d389550bee3f"
 }
