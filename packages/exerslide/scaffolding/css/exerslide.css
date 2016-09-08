@@ -111,7 +111,7 @@ body {
 
 .exerslide-slide > * {
   display: flex;
-  flex: 1;
+  flex: 1 0 auto;
   flex-direction: column;
   line-height: 1.6;
   /**
@@ -126,7 +126,7 @@ body {
   max-width: 45em;
   /**
    * This ensures that slides with little content (i.e. without a full line of
-   * content) are still positioned correclty.
+   * content) are still positioned correctly.
    */
   width: 100%;
 }
