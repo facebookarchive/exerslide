@@ -63,7 +63,7 @@ For example, to change the text color of whole slide to red:
 ---
 title: example
 style: |
-  #exerslide-slide {
+  .exerslide-slide {
     background-color: black;
     color: red;
   }
@@ -75,7 +75,7 @@ style: |
 {
   title: example,
   style: "
-    #exerslide-slide {
+    .exerslide-slide {
       background-color: black;
       color: red;
     }"

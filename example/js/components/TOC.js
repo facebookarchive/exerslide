@@ -8,12 +8,11 @@
 /*
  * This hash helps exerslide to determine whether the file needs to be updated
  * or not. Please don't remove it.
- * @exerslide-file-hash eaf77b7603e0e0c989660d4049c126ad
+ * @exerslide-file-hash 62f3f6563055c5348af7ff1de35aa63a
  */
 
 import React from 'react';
-import * as exerslide from 'exerslide/browser';
-const {groupByChapter, IS_MOBILE} = exerslide;
+import {groupByChapter, IS_MOBILE} from 'exerslide/browser';
 
 import './css/toc.css';
 
@@ -39,7 +38,9 @@ class Entry extends React.Component {
     let classes = ['exerslide-toc-entry'];
     const layout = slide.layout;
     if (layout && layout.getClassNames) {
-      classes = classes.concat(layout.getClassNames(slideIndex, exerslide));
+      classes = classes.concat(
+        layout.getClassNames({slides, slideIndex, slide})
+      );
     }
     const title = slideOptions.toc || slideOptions.title ||
       `Slide ${slideIndex + 1}`;
