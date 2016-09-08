@@ -33,5 +33,6 @@
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "yaml-loader": "^0.4.0"
-  }
+  },
+  "exerslide": "@exerslide-file-hash"
 }

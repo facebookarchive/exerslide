@@ -40,6 +40,13 @@ exports.builder = function(yargs) {
         type: 'boolean',
         default: true,
       },
+      'ignore-hash': {
+        describe: 'Don\'t compare file hashes of existing files. If set to ' +
+          'true, you will asked for any existing file that differs from the ' +
+          'template file.',
+        type: 'boolean',
+        default: false,
+      },
     })
     .example('$0 copy-files --name myPresentation');
 };

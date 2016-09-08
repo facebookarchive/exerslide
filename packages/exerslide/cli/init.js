@@ -44,7 +44,7 @@ function copyFiles() {
   const scaffolder = require('../lib/scaffolder');
 
   return new Promise((resolve, reject) => {
-    scaffolder(process.cwd(), {confirm: true}, error => {
+    scaffolder(process.cwd(), {confirm: true, ignoreHash: true}, error => {
       if (error) {
         reject(error);
       }

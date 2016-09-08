@@ -101,7 +101,7 @@ module.exports = function copyDir(options) {
                   mode: sourceStats.mode,
                   transform,
                 }));
-              } else if (!keepAll) {
+              } else {
                 let sourceContents;
                 try {
                   sourceContents = fs.readFileSync(sourcePath);
@@ -116,29 +116,37 @@ module.exports = function copyDir(options) {
                     sourceContents
                   );
                 }
-                // ask the user what to do
-                ask(sourcePath, targetPath, sourceContents).then(
-                  (options) => {
-                    overwriteAll = options.overwriteAll;
-                    keepAll = options.keepAll;
-                    const contents = options.contents || sourceContents;
-                    if (options.write) {
-                      delegateEvents(copyFile({
-                        sourcePath,
-                        targetPath,
-                        mode: sourceStats.mode,
-                        contents,
-                      }));
-                    } else {
-                      emitter.emit('skip', sourcePath);
-                      next();
-                    }
-                  },
-                  emitError
-                );
-              } else {
-                emitter.emit('skip', sourcePath);
-                next();
+                if (!keepAll) {
+                  // ask the user what to do
+                  ask(sourcePath, targetPath, sourceContents).then(
+                    (options) => {
+                      overwriteAll = options.overwriteAll;
+                      keepAll = options.keepAll;
+                      const contents = options.contents || sourceContents;
+                      if (options.write) {
+                        delegateEvents(copyFile({
+                          sourcePath,
+                          targetPath,
+                          mode: sourceStats.mode,
+                          contents,
+                        }));
+                      } else {
+                        markFileAsUpdated(
+                          sourceContents,
+                          sourcePath,
+                          targetPath
+                        );
+                      }
+                    },
+                    emitError
+                  );
+                } else {
+                  markFileAsUpdated(
+                    sourceContents,
+                    sourcePath,
+                    targetPath
+                  );
+                }
               }
             });
           });
@@ -152,6 +160,26 @@ module.exports = function copyDir(options) {
         otherEmitter.on('skip', emitter.emit.bind(emitter, 'skip'));
         otherEmitter.once('error', emitter.emit.bind(emitter, 'error'));
         otherEmitter.once('finish', next);
+      }
+
+      function markFileAsUpdated(sourceContents, sourcePath, targetPath) {
+        if (!/@exerslide-file-hash/.test(sourceContents)) {
+           emitter.emit('skip', sourcePath);
+           return next();
+        }
+        try {
+          // We still have to update the hash in the file so that
+          // we know we already asked the user about this file
+          const updated = updateHash(sourceContents, targetPath);
+          if (updated) {
+            emitter.emit('update-hash', sourcePath);
+          } else {
+            emitter.emit('skip', sourcePath);
+          }
+        } catch (error) {
+          emitter.emit('error', error);
+        }
+        next();
       }
 
       // start
@@ -178,7 +206,6 @@ module.exports = function copyDir(options) {
  *  - mode: number
  *  - transform: function
  *  - contents: Buffer | string
- *  - log: Optional log function to show additional information.
  */
 function copyFile(options) {
   const sourcePath = options.sourcePath;
@@ -220,4 +247,30 @@ function copyFile(options) {
   }
 
   return emitter;
+}
+
+function updateHash(sourceContents, targetPath) {
+  // We still have to update the hash in the file so that
+  // we know we already asked the user about this file
+  const sourceHash = sourceContents.match(
+    /@exerslide-file-hash (\S+)/
+  )[1];
+  const targetContents =
+    fs.readFileSync(targetPath).toString();
+  const targetHash = targetContents.match(
+    /@exerslide-file-hash (\S+)/
+  )[1];
+  if (targetHash !== sourceHash) {
+    fs.writeFileSync(
+      targetPath,
+      fs.readFileSync(targetPath).toString()
+        .replace(
+          /@exerslide-file-hash \S+/,
+          '@exerslide-file-hash ' + sourceHash
+        )
+    );
+    return true;
+  } else {
+    return false;
+  }
 }

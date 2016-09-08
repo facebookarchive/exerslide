@@ -9,6 +9,7 @@
 'use strict';
 
 const colors = require('colors');
+const crypto = require('crypto');
 const copyDir = require('./fs/copyDir');
 const diff = require('./utils/diff');
 const pathExists = require('./fs/pathExists');
@@ -20,6 +21,7 @@ const template = require('lodash.template');
 
 const cyan = colors.cyan;
 
+const HASH_PATTERN = /@exerslide-file-hash (\S+)/;
 const SCAFFOLDING_PATH = path.join(__dirname, '../scaffolding');
 const APPLY_TEMPLATE_TO = [
   /package.json$/,
@@ -55,12 +57,18 @@ module.exports = function scaffolder(targetDir, options, done) {
   }
 
   function transform(sourcePath, targetPath, contents) {
+    contents = contents.toString();
     if (APPLY_TEMPLATE_TO.some(pattern => pattern.test(sourcePath)) &&
       isTextPath(sourcePath)
     ) {
-      return template(contents.toString())({name: options.name || ''});
+      contents = template(contents)({name: options.name || ''});
     }
-    return contents;
+    return contents
+      // inject file hash to keep track of changes
+      .replace(
+        '@exerslide-file-hash',
+        `@exerslide-file-hash ${hash(contents)}`
+      )
   }
 
   const emitter = copyDir({
@@ -74,6 +82,10 @@ module.exports = function scaffolder(targetDir, options, done) {
   });
   emitter.on('copy', (sourcePath) => {
     log(`Copied "${cyan(path.relative(SCAFFOLDING_PATH, sourcePath))}".`);
+  });
+  emitter.on('update-hash', (sourcePath) => {
+    sourcePath = path.relative(SCAFFOLDING_PATH, sourcePath);
+    log(`Marked "${cyan(sourcePath)}" as updated.`);
   });
   emitter.on('skip', (sourcePath) => {
     log(`Skipped "${cyan(path.relative(SCAFFOLDING_PATH, sourcePath))}".`);
@@ -156,6 +168,20 @@ function processFile(sourcePath, targetPath, sourceFileContent, options) {
       return Promise.resolve({write: true, overwriteAll: true});
     }
 
+    if (!options.ignoreHash) {
+      // Lets see whether the existing file is based on the current version.
+      // This avoids asking the user if the source file didn't change but they
+      // made custom changes to it.
+      if (!needsUpdate(targetFileContent, sourceFileContent)) {
+        return Promise.resolve({write: false});
+      }
+      // If it needs updating, do that automatically if the target file wasn't
+      // changed manually
+      if (!wasModified(targetFileContent)) {
+        return Promise.resolve({write: true});
+      }
+    }
+
     return ask(relativePath).then(function handleAnswer(answer) {
       switch (answer.action) {
         case 'overwrite_all':
@@ -209,4 +235,36 @@ function processFile(sourcePath, targetPath, sourceFileContent, options) {
   } else {
     return Promise.resolve({write: false});
   }
+}
+
+// Hash the file and compare against the hash stored in the file. If it differs,
+// the file was manually edited.
+function wasModified(content) {
+  const match = content.match(HASH_PATTERN);
+  // If we cannot find the pattern it was manually removed (hence edited) or
+  // created before we hashed files
+  if (!match) {
+    return true;
+  }
+  const storedHash = match[1];
+  // Strip hash from the file
+  return storedHash !== hash(content.replace(' ' + storedHash, ''));
+}
+
+// If the hash if the source file differs from the hash stored in the target
+// file, the target file needs to be updated.
+function needsUpdate(targetFileContent, sourceFileContent) {
+  const match = targetFileContent.match(HASH_PATTERN);
+  // If we cannot find the pattern it was manually removed (hence edited) or
+  // created before we hashed files
+  if (!match) {
+    return true;
+  }
+  return match[1] !== sourceFileContent.match(HASH_PATTERN)[1];
+}
+
+function hash(content) {
+  return crypto.createHash('md5')
+    .update(content)
+    .digest('hex');
 }
