@@ -73,6 +73,11 @@ module.exports = function scaffolder(targetDir, options, done) {
       contents = template(contents)({name: options.name || ''});
     }
     return contents
+      // cleanup file source
+      .replace(
+        /^.*?@remove-on-copy-start[\s\S]+?@remove-on-copy-end.*$/mg,
+        ''
+      )
       // inject file hash to keep track of changes
       .replace(
         '@exerslide-file-hash',
