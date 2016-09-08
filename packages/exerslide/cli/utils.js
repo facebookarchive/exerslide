@@ -77,3 +77,7 @@ exports.logEvents = function logEvents(builder) {
     process.stdout.write('\x1bc');
   });
 };
+
+exports.hasFlag = function hasFlag(flag) {
+  return process.argv.some(x => x === flag);
+}

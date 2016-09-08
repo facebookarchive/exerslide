@@ -4,8 +4,8 @@
   "description": "A tool for creating HTML presentations with focus on exercises for web technologies",
   "scripts": {
     "test": "npm run test-browser && npm run test-server",
-    "test-server": "mocha `find lib/ -name *-test.js`",
     "test-browser": "mocha --require ignore-styles --require ./scripts/browser-test-setup.js --compilers js:babel-register `find browser/ browser-plugins/ components/ scaffolding/ -name *-test.js`",
+    "test-server": "mocha `find lib/ cli/ -name *-test.js`",
     "lint": "eslint index.js browser.js cli/ lib/ components/ browser/ scaffolding/",
     "prepublish": "npm run lint && npm run test"
   },

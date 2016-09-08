@@ -29,7 +29,7 @@ exports.builder = {
 exports.describe = 'copies the default files and installs required dependencies. See also "copy-defaults"';
 exports.handler = function(argv) {
   const utils = require('./utils');
-  copyFiles()
+  copyFiles(argv)
     .then(() => installDependencies(argv))
     .catch(error => {
       if (/^There seems to be/.test(error.message)) {
@@ -40,31 +40,47 @@ exports.handler = function(argv) {
     });
 };
 
-function copyFiles() {
+function copyFiles(argv) {
+  const utils = require('./utils');
   const scaffolder = require('../lib/scaffolder');
 
   return new Promise((resolve, reject) => {
-    scaffolder(process.cwd(), {confirm: true, ignoreHash: true}, error => {
-      if (error) {
-        reject(error);
+    utils.log('Creating initial files...');
+    scaffolder(
+      process.cwd(),
+      {
+        confirm: true,
+        ignoreHash: true,
+        name: argv.name,
+      },
+      error => {
+        if (error) {
+          reject(error);
+        }
+        resolve();
       }
-      resolve();
-    });
+    );
   });
 }
 
 function installDependencies(argv) {
-  const childProcess = require('child_process');
   const utils = require('./utils');
+  if (utils.hasFlag('--EXERSLIDE_TEST')) {
+    return;
+  }
+
+  const childProcess = require('child_process');
   const colors = require('colors');
 
   return new Promise((resolve, reject) => {
-    utils.log('Installing dependencies (`npm install`)...');
+    utils.log(
+      'Installing dependencies (`npm install`). This may take a while...'
+    );
     const npm = childProcess.spawn(
       'npm',
-      ['install'],
+      ['install', argv.verbose ? '' : '--loglevel=error'],
       {
-        stdio:argv.verbose ? 'inherit' : 'ignore',
+        stdio: ['inherit', argv.verbose ? 'inherit' : 'ignore', 'inherit'],
       }
     );
 
