@@ -18,9 +18,19 @@ const yargs = require('yargs');
 const red = colors.red;
 const blue = colors.blue;
 
-function logError(msg) {
-  process.stdout.write(red(msg) + '\n');
+function log(msg) {
+  process.stdout.write(msg + '\n');
 }
+
+function logError(msg) {
+  process.stderr.write(msg + '\n');
+}
+
+function exitWithError(msg) {
+  logError(msg);
+  process.exit(1);
+}
+
 
 const cli = yargs
   .epilog(
@@ -54,7 +64,13 @@ exerslide.launch({}, env => {
   } else {
     cli.command(
       'init [name]',
-      'create a new exerslide project in the current directory'
+      'create a new exerslide project in the current directory',
+      {
+        verbose: {
+          alias: 'v',
+          description: 'Show the `npm install` output.',
+        },
+      }
     );
   }
 
@@ -66,7 +82,7 @@ exerslide.launch({}, env => {
       installExerslide(argv, env);
     } else {
       logError(
-        'Local exerslide version not found, run "exerslide init" first.'
+        red('Local exerslide version not found, run "exerslide init" first.')
       );
       cli.showHelp();
       process.exit(1);
@@ -89,72 +105,68 @@ function installExerslide(argv, env) {
   const childProcess = require('child_process');
   const pkgPath = path.join(env.cwd, 'package.json');
 
+  if (fs.readdirSync(env.cwd).length > 0) {
+    exitWithError(
+      red('Error: Directory is not empty!\n') +
+      'It seems you are trying to initialize a new project in an existing ' +
+      'directory. To prevent accidentally overriding your files, run ' +
+      '`exerslide init` in an empty directory.'
+    );
+  }
   // Create a package.json file so that npm install and liftoff work
-  if (!fileExists(pkgPath)) {
-    try {
-      fs.writeFileSync(pkgPath, '{}');
-    } catch (err) {
-      process.stderr.write(err.message);
-      return;
-    }
+  try {
+    fs.writeFileSync(pkgPath, '{}');
+  } catch (err) {
+    exitWithError(red('Unable to initialize new project: ') + err.message);
   }
 
+  log(
+    'Installing exerslide (`npm install exerslide`). This may take a while...'
+  );
   const npm = childProcess.spawn(
     'npm',
-    ['install', 'exerslide'],
+    ['install', argv.verbose ? '' : '--loglevel=error', 'exerslide'],
     {
-      stdio: 'inherit',
+      stdio: argv.verbose ?
+        'inherit' :
+        ['inherit', 'ignore', 'inherit'],
       cwd: env.cwd,
       env: process.env,
     }
   );
+
   npm.on('close', code => {
     if (code !== 0) {
-      logError(
+      exitWithError(red(
         '\nError: There seems to be a problem with npm. Have a look at ' +
-        'the above output for more information.'
-      );
-      return;
+        `the above output or ${blue('npm-debug.log')} for more information.`
+      ));
     }
-    initLocalVersion(argv.name);
+    initLocalVersion();
   });
 }
 
-function initLocalVersion(name) {
+function initLocalVersion() {
   const childProcess = require('child_process');
   // reload local version and delegate
   exerslide.launch({}, env => {
     // if exerslide can still not be found, give up
     if (!env.modulePath) {
-      logError(
+      exitWithError(red(
         'Error: Unable to find local exerslide, even though I just ' +
         'installed it. I give up :('
-      );
-      return;
+      ));
     }
 
-    const args = ['init'];
-    if (name) {
-      args.push(name);
-    }
     childProcess.spawn(
       __filename,
-      args,
+      process.argv.slice(2), // pass original arguments
       {
         stdio: 'inherit',
         cwd: env.cwd,
         env: process.env,
       }
     );
-  });
-}
 
-function fileExists(path) {
-  const fs = require('fs');
-  try {
-    fs.accessSync(path, fs.F_OK);
-    return true;
-  } catch (e) {
-    return false;
-  }
+  });
 }

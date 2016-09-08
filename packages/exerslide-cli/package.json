@@ -7,6 +7,7 @@
     "exerslide": "./bin/exerslide.js"
   },
   "scripts": {
+    "test": "mocha ./bin/__tests__/exerslide-test.js",
     "lint": "eslint bin/"
   },
   "keywords": [
@@ -22,7 +23,11 @@
     "yargs": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.3.1"
+    "chai": "^3.5.0",
+    "eslint": "^3.3.1",
+    "fs-extra": "^0.30.0",
+    "mocha": "^3.0.2",
+    "temp": "^0.8.3"
   },
   "repository": {
     "type": "git",
