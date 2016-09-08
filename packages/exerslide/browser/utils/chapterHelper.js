@@ -21,7 +21,7 @@ export function groupByChapter(slides) {
       let previousEntry = groupedSlides[groupedSlides.length - 1];
       if (Array.isArray(previousEntry) &&
           (slide.options.chapter === previousEntry[0].options.chapter ||
-           slide.pathHash === previousEntry[0].pathHash)
+           slide.pathHash && slide.pathHash === previousEntry[0].pathHash)
       ) {
         previousEntry.push(slide);
       } else if (slide.options.chapter) { // new chapter

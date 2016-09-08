@@ -12,8 +12,7 @@
  */
 
 import React from 'react';
-import * as exerslide from 'exerslide/browser';
-const {groupByChapter, IS_MOBILE} = exerslide;
+import {groupByChapter, IS_MOBILE} from 'exerslide/browser';
 
 import './css/toc.css';
 
@@ -39,7 +38,9 @@ class Entry extends React.Component {
     let classes = ['exerslide-toc-entry'];
     const layout = slide.layout;
     if (layout && layout.getClassNames) {
-      classes = classes.concat(layout.getClassNames(slideIndex, exerslide));
+      classes = classes.concat(
+        layout.getClassNames({slides, slideIndex, slide})
+      );
     }
     const title = slideOptions.toc || slideOptions.title ||
       `Slide ${slideIndex + 1}`;

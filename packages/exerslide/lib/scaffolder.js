@@ -49,7 +49,7 @@ module.exports = function scaffolder(targetDir, options, done) {
     }
   }
 
-  const filesToIgnore = [/.eslintrc.yml$/];
+  const filesToIgnore = [/.eslintrc.yml$/, /__tests__/];
   if (pathExists(path.join(targetDir, 'exerslide.config.js'))) {
     // We already initialized this directory, so we don't need to copy some
     // files again.

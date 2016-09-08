@@ -25,16 +25,33 @@ describe('scaffolder', () => {
       dir,
       {name: 'test', confirm: false},
       function() {
-        const targetDirFiles = globby.sync(path.join(dir, '**/*'));
+        const targetDirFiles = globby.sync(path.join(dir, '**/*'))
+          .map(p => p.replace(dir, ''));
         const scaffoldingFiles =
           globby.sync(path.join(SCAFFOLDING_PATH, '**/*'))
-          .map(x => x.replace(/style\.css$/, 'test.css'));
+            .filter(p => p.indexOf('__tests__') === -1)
+            .map(p => p.replace(/style\.css$/, 'test.css')
+                       .replace(SCAFFOLDING_PATH, '')
+            );
 
         expect(targetDirFiles).to.not.be.empty;
-        expect(targetDirFiles.map(p => p.replace(dir, '')))
-          .to.include.members(
-          scaffoldingFiles.map(p => p.replace(SCAFFOLDING_PATH, ''))
-        );
+        expect(targetDirFiles).to.include.members(scaffoldingFiles);
+        expect(scaffoldingFiles).to.include.members(targetDirFiles);
+        done();
+      }
+    );
+  });
+
+  it('does not copy tests', done => {
+    const dir = testUtils.makeDirectoryStructure({});
+
+    scaffolder(
+      dir,
+      {name: 'test', confirm: false},
+      function() {
+        const targetDirFiles = globby.sync(path.join(dir, '**/*'));
+        expect(targetDirFiles.filter(p => p.indexOf('__tests__') > -1))
+          .to.have.length(0);
         done();
       }
     );

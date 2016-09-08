@@ -28,6 +28,35 @@ describe('chapterHelper', () => {
       ]);
     });
 
+    it('does not group slides if they do not have chapter or pathHash', () => {
+      const slides = [
+        {options: {}},
+        {options: {}},
+        {options: {}},
+      ];
+
+      expect(groupByChapter(slides)).to.deep.equal([
+        {options: {}},
+        {options: {}},
+        {options: {}},
+      ]);
+    });
+
+    it('groups slides with only `chapter`', () => {
+      const slides = [
+        {options: {chapter: 'A'}},
+        {options: {chapter: 'A'}},
+        {options: {chapter: 'B'}},
+        {options: {}},
+      ];
+
+      expect(groupByChapter(slides)).to.deep.equal([
+        [{options: {chapter: 'A'}}, {options: {chapter: 'A'}}],
+        [{options: {chapter: 'B'}}],
+        {options: {}},
+      ]);
+    });
+
   });
 
 });
