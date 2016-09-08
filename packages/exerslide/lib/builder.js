@@ -363,7 +363,7 @@ function logWebpackErrors(id, webpackConfig, stats, logger) {
 
 function formatWebpackError(error, webpackConfig) {
   const message = cleanWebpackErrorMessage(error.message || error);
-  if (!error.module) {
+  if (!error.module || !error.module.resource) {
     return message + '\n';
   }
   const relativePath = path.relative(
