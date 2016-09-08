@@ -1,9 +1,13 @@
 {
-  "presets": ["es2015", "react"],
-  "plugins": [
-    "transform-object-rest-spread",
-    ["module-alias", [
-      {"src": "./", "expose": "exerslide"},
-    ]]
-  ]
+  "env": {
+    "exerslide-test": {
+      "presets": ["es2015", "react"],
+      "plugins": [
+        "transform-object-rest-spread",
+        ["module-alias", [
+          {"src": "./", "expose": "exerslide"},
+        ]]
+      ]
+    }
+  }
 }

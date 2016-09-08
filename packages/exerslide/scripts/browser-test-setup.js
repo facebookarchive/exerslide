@@ -19,3 +19,8 @@ Object.keys(global.document.defaultView).forEach((property) => {
 global.navigator = {
   userAgent: 'node.js',
 };
+
+// The .babelrc file in the parent directory is configured to only be used in
+// the "exerslide-test" environment. This prevents Babel from picking up this
+// config when running webpack (which results in errors)
+process.env.BABEL_ENV = 'exerslide-test';
