@@ -1,6 +1,6 @@
 {
   "name": "exerslide-plugin-javascriptexercise-layout",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A JavaScript exercise layout for exerslide.",
   "author": "Felix Kling",
   "dependencies": {
@@ -10,7 +10,7 @@
   },
   "peerDependencies": {
     "codemirror": "^5.10.0",
-    "exerslide": "~1.0.0",
+    "exerslide": "~1.1.0",
     "react": "^15.0.0"
   },
   "repository": {
