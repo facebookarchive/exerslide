@@ -43,10 +43,11 @@ module.exports = function scaffolder(targetDir, options, done) {
     try {
       const pkg = require(path.join(targetDir, 'package.json'));
       options.name = pkg.name;
-    } catch (err) {
-      // Use the directory name as project name
-      options.name = path.basename(targetDir);
-    }
+    } catch (err) { } // eslint-disable-line no-empty
+  }
+  if (!options.name) {
+    // Use the directory name as project name
+    options.name = path.basename(targetDir);
   }
 
   const filesToIgnore = [/.eslintrc.yml$/, /__tests__/];

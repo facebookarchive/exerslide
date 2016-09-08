@@ -157,5 +157,82 @@ describe('scaffolder', () => {
     );
   });
 
+  it('uses the "name" option for the custom CSS file and injects it', done => {
+    const dir = testUtils.makeDirectoryStructure({});
+
+    scaffolder(
+      dir,
+      {name: 'myProject', confirm: false},
+      function() {
+        testUtils.validateFolderStructure(
+          dir,
+          {
+            css: {
+              'myProject.css': '',
+            },
+            'package.json': content => {
+              expect(content).to.contain('"name": "myProject"');
+            },
+            'index.html': content => {
+              expect(content).to.contain('<title>myProject</title>');
+            },
+          }
+        );
+        done();
+      }
+    );
+  });
+
+  it('uses the name in package.json if none is passed', done => {
+    const dir = testUtils.makeDirectoryStructure({
+      'package.json': JSON.stringify({name: 'packageNameTest'}),
+    });
+
+    scaffolder(
+      dir,
+      {confirm: false},
+      function() {
+        testUtils.validateFolderStructure(
+          dir,
+          {
+            css: {
+              'packageNameTest.css': '',
+            },
+            'index.html': content => {
+              expect(content).to.contain('<title>packageNameTest</title>');
+            },
+          }
+        );
+        done();
+      }
+    );
+  });
+
+  it('uses the name of the current working directory', done => {
+    const dir = testUtils.makeDirectoryStructure({
+      'package.json': JSON.stringify({name: ''}),
+    });
+    const name = path.basename(dir);
+    const css = {};
+    css[name + '.css'] = '';
+
+    scaffolder(
+      dir,
+      {confirm: false},
+      function() {
+        testUtils.validateFolderStructure(
+          dir,
+          {
+            css,
+            'index.html': content => {
+              expect(content).to.contain(`<title>${name}</title>`);
+            },
+          }
+        );
+        done();
+      }
+    );
+  });
+
 });
 
