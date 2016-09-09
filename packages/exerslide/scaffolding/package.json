@@ -13,6 +13,7 @@
     "exerslide-plugin-markdown-converter": "^1.1.0",
     "font-awesome": "^4.4.0",
     "foundation-sites": "^6.1.2",
+    "highlight.js": "^9.6.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0"
   },
