@@ -8,7 +8,7 @@
 /*
  * This hash helps exerslide to determine whether the file needs to be updated
  * or not. Please don't remove it.
- * @exerslide-file-hash 04e3e1bc1c0a53e79216877fe9cc616f
+ * @exerslide-file-hash c1d1b16e36de349931df2b15adc2a9c8
  */
 
 import ExtensionPoint from 'exerslide/components/ExtensionPoint';

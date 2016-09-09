@@ -8,7 +8,7 @@
 /*
  * This hash helps exerslide to determine whether the file needs to be updated
  * or not. Please don't remove it.
- * @exerslide-file-hash 74fff00dd4ff8f53c43d18c85ed5a6c5
+ * @exerslide-file-hash ca97a5ed94cbd4463bea871d1d921eca
  */
 
 import React from 'react';

@@ -9,7 +9,7 @@
 /*
  * This hash helps exerslide to determine whether the file needs to be updated
  * or not. Please don't remove it.
- * @exerslide-file-hash 6069ab52cbc758f81c18b028bf82a535
+ * @exerslide-file-hash 9fb0ace1842e8bf7bee9c504e5f7a2f7
  */
 
 import PageHeader from './components/PageHeader';
