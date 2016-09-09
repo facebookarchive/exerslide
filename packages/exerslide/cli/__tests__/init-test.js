@@ -24,7 +24,7 @@ function run(args, cwd) {
       {cwd},
       (error, stdout, stderr) => {
         if (error) {
-          reject(`Unexpected error: ${error.message}`);
+          reject(error);
           return;
         }
         resolve({stdout, stderr});

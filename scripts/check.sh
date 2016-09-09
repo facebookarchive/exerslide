@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Copyright (c) 2016-present, Facebook, Inc.
 # All rights reserved.
 #
@@ -29,8 +29,8 @@ done
 # Build example as smoke test
 pushd ./example
 echo "exerslide build"
-exerslide build --smoke-test &> /dev/null
+exerslide build 
 echo "exerslide watch"
-exerslide watch --smoke-test &> /dev/null
+exerslide watch --smoke-test
 echo "exerslide serve"
-exerslide serve --no-open-browser --smoke-test &> /dev/null
+exerslide serve --no-open-browser --smoke-test

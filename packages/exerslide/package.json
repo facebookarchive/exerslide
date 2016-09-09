@@ -6,7 +6,7 @@
     "test": "npm run test-browser && npm run test-server",
     "test-browser": "mocha --require ignore-styles --require ./scripts/browser-test-setup.js --compilers js:babel-register `find browser/ browser-plugins/ components/ scaffolding/ -name *-test.js`",
     "test-server": "mocha `find lib/ cli/ -name *-test.js`",
-    "lint": "eslint index.js browser.js cli/ lib/ components/ browser/ scaffolding/",
+    "lint": "eslint index.js browser.js cli/ lib/ components/ browser/ browser-plugins/ scaffolding/",
     "prepublish": "npm run lint && npm run test"
   },
   "keywords": [
@@ -41,7 +41,7 @@
   },
   "peerDependencies": {
     "codemirror": "^5.7.0",
-    "highlight.js": "^9.0.0",
+    "highlight.js": "^9.6.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "webpack": "^1.12.11"
@@ -62,7 +62,8 @@
     "fs-extra": "^0.30.0",
     "ignore-styles": "^5.0.1",
     "jsdom": "^9.4.5",
-    "react-addons-test-utils": "^15.3.1"
+    "react-addons-test-utils": "^15.3.1",
+    "yargs": "^5.0.0"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-# exerslide
+# exerslide [![Build Status](https://travis-ci.org/facebookincubator/exerslide.svg?branch=master)](https://travis-ci.org/facebookincubator/exerslide)
 
 A tool to generate simple HTML slideshows/tutorials (from text files). The
 primary intent is to generate interactive presentations for teaching web

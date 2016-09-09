@@ -1,0 +1,16 @@
+sudo: false
+language: node_js
+node_js:
+  - 4
+  - 5
+  - 6
+  - stable
+install: 
+  - npm install
+  - ./scripts/setupDevEnv.js ./example --test
+script:
+  - ./scripts/check.sh
+  - ./scripts/testNewProject.sh
+matrix:
+  allow_failures:
+    - node_js: stable
