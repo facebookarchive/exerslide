@@ -1,10 +1,10 @@
-# exerslide [![Build Status](https://travis-ci.org/facebookincubator/exerslide.svg?branch=master)](https://travis-ci.org/facebookincubator/exerslide)
+# exerslide 
+
+[![Build Status](https://travis-ci.org/facebookincubator/exerslide.svg?branch=master)](https://travis-ci.org/facebookincubator/exerslide)
 
 A tool to generate simple HTML slideshows/tutorials (from text files). The
 primary intent is to generate interactive presentations for teaching web
-technologies.
-As such, the focus is on easy content production with lean styles, and less on
-fancy animations.
+technologies. Built on [React][] and [webpack][].
 
 - [Examples](#examples)
 - [Getting Started](#getting-started)
@@ -25,41 +25,34 @@ Presentations / sites built with exerslide:
 
 ## Getting started
 
-exerslide comes in two parts: A global CLI to initialize and build 
-presentations, and a module that contains further dependencies to build the
-presentation.
-
-First install the `exerslide-cli` package:
-
-```bash
-npm install -g exerslide-cli
-```
-
-Then initialize a new project / presentation, by creating a new folder and
-running `exerslide init`:
-
-```sh
-mkdir myPresentation
-cd myPresentation
-exerslide init myPresentation
-```
-
-This creates the basic project structure and copies a couple of files into the 
-folder so that you can customize them more easily. It also creates a folder for 
-your slides (`slides/`) containing an example slide.
-
-An exerslide presentation is basically a package itself with its own 
-dependencies. `exerslide init` will install the required dependencies. In 
-particular, exerslide uses [webpack][] to build
+exerslide comes in two parts: A global command line interface to initialize and 
+build presentations, and a module that contains further dependencies to build 
 the presentation.
 
-To build the presentation you can run the predefined script
+1. First install the `exerslide-cli` package globally:
 
-```sh
-exerslide build
-```
+    ```bash
+    npm install -g exerslide-cli
+    ```
 
-which will create the presentation in `out/`.
+2. Initialize a new project / presentation, by creating a new folder and
+running `exerslide init`:
+
+    ```sh
+    mkdir myPresentation
+    cd myPresentation
+    exerslide init myPresentation
+    ```
+
+3. Created/edit slides in `slides/`.
+
+4. Run
+
+    ```sh
+    exerslide serve
+    ```
+
+  to start a local webserver to view the presentation.
 
 ## Concepts
 
@@ -156,7 +149,7 @@ the first slide.
   - `Object`: Otherwise the value can be object with up to three properties:
     - `content_width`: Specifies the content width in `em`s. This can be 
     thought of as how many words / characters per line should be shown.
-    - `screen_width`: A number between 0 and 1. How much of the screen (width) 
+    - `column_width`: A number between 0 and 1. How much of the screen (width) 
     should be occupied by the content.
     - `max_font_size`: Don't make the font any larger than this value (in 
     pixel).
@@ -339,8 +332,6 @@ and settings for the exerslide's slide loader.
 
 - `stylesheets`: An array of paths to stylesheets that should be bundled with 
 the presentation.
-- `assets`: A list of file patterns. Matched files are copied into the output
-folder.
 - `defaultLayouts`: An object that maps file extensions to layout names.
 - `plugins`: A list of module names to load as plugins. `exerslide-plugin-` can 
 be omitted from the name. Plugins are intended to provide additional layouts, 

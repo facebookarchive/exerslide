@@ -1,10 +1,11 @@
 # Changelog
 
 Changelog for all packages in this repo. The tags and [GitHub 
-releases](releases/) only reflect the status of the `exerslide` package. To 
-save space, `exerslide-plugin-*` prefix is omitted from package names
+releases](https://github.com/facebookincubator/exerslide/releases) only reflect 
+the status of the `exerslide` package.  To save space, `exerslide-plugin-*` 
+prefix is omitted from package names
 
-## exerslide-cli@v1.1.0 (2016-09-09)
+## exerslide-cli v1.1.0 (2016-09-09)
 
 ### New
 
@@ -19,7 +20,7 @@ output, pass `--verbose` (2b33dc3).
 
 ---
 
-## exerslide@v1.1.2 (2016-09-09)
+## exerslide v1.1.2 (2016-09-09)
 
 ### New
 
@@ -38,8 +39,8 @@ obscure the actual issue
   the scaffolder, causing the generation of invalid files (c839be2, 986e07b)
 
 - `highlight.js` was missing from projects dependencies but is required since it
-is referenced in `exerslide.config.js`. This would have caused problems on 
-npm@2, but not npm@3. (a09e7b6)
+is referenced in `exerslide.config.js`. This would have caused problems on npm 
+v2, but not npm v3. (a09e7b6)
 
 ### Upgrade instructions
 
@@ -70,14 +71,14 @@ removing the copyright header from the files.
 
 ---
 
-## exerslide@v1.1.1 (2016-09-08)
+## exerslide v1.1.1 (2016-09-08)
 
 - `<TOC />` didn't pass the right arguments to the layout's `getClassNames` 
   method (c5ce9de).
 
 ---
 
-## exerslide @v1.1.0 (2016-09-07)
+## exerslide v1.1.0 (2016-09-07)
 
 There are quite a few changes in this release please refer to the commit message for more information.
 
@@ -224,14 +225,14 @@ webpack will copy them, or use a plugin such as
 
 ---
 
-## exerslide@v1.0.2, markdown-converter@v1.0.1 (2016-08-31)
+## exerslide v1.0.2, markdown-converter v1.0.1 (2016-08-31)
 
 - Avoid using spread and rest to be able to run in Node v4 
 (40ce45b82fc078aedbfe30bffac74fc2246e49cc).
 
 ---
 
-## exerslide@v1.0.1 (2016-08-31)
+## exerslide v1.0.1 (2016-08-31)
 
 - Fix forward and back buttons in toolbar. They hadn't been working due to API 
 changes. (313ffc395c1ef8b1b02efc40993d8f55bff0d5cb)
