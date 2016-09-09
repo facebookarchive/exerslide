@@ -4,9 +4,11 @@
       "presets": ["es2015", "react"],
       "plugins": [
         "transform-object-rest-spread",
-        ["module-alias", [
-          {"src": "./", "expose": "exerslide"},
-        ]]
+        ["module-resolver", {
+          "alias": {
+            "exerslide": "./"
+          }
+        }]
       ]
     }
   }
