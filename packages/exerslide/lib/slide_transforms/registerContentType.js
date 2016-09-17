@@ -115,5 +115,7 @@ module.exports = function(config) {
 };
 
 function contentTypeToFileName(type) {
-  return type.replace('/', '_');
+  if (type) {
+    return type.replace('/', '_');
+  }
 }
