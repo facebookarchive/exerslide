@@ -15,6 +15,10 @@ const helperPath = JSON.stringify(
   path.resolve(__dirname, './utils/registerLanguage.js')
 );
 
+const ignoredLabels = new Set([
+  'react', // React fence code block
+]);
+
 module.exports = function(config) {
   const languagePaths = config.languagePaths || {};
 
@@ -42,7 +46,7 @@ module.exports = function(config) {
           {}
         );
         errors = Array.from(languages)
-          .filter(name => !foundLanguages[name])
+          .filter(name => !foundLanguages[name] && !ignoredLabels.has(name))
           .map(
             name => `Cannot find a syntax highlighter for language "${name}".`
           );
