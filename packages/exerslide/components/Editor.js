@@ -29,10 +29,6 @@ export default class Editor extends React.Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state !== nextState;
-  }
-
   componentDidUpdate(prevProps, prevState) {
     let textareaDOMNode = this.refs.textarea;
     if (this.state.showTextarea && !prevState.showTextarea) {
@@ -116,7 +112,7 @@ export default class Editor extends React.Component {
 
     return (
       <div
-        className="editor"
+        className={'editor ' + this.props.className || ''}
         role="region"
         style={this.props.style}
         aria-label={this.props.label}>
@@ -136,7 +132,10 @@ export default class Editor extends React.Component {
         />
         <div
           ref="cm"
-          style={{display: this.state.showTextarea ? 'none': 'block'}}
+          style={{
+            height: '100%',
+            display: this.state.showTextarea ? 'none': 'block',
+          }}
         />
       </div>
     );
@@ -166,6 +165,10 @@ Editor.propTypes = {
    * Configuration options to pass to the CodeMirror instance.
    */
   config: React.PropTypes.object,
+  /**
+   * Additional classes to add to the editor.
+   */
+  className: React.PropTypes.string,
   /**
    * The initial value to show in the editor.
    */
