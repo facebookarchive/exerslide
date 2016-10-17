@@ -134,7 +134,7 @@ function writeSlideFile(config) {
         .map(p => (
           ('require("' + path.join(__dirname, './slide-loader') +
           '!' + path.relative(path.dirname(config.__slideFile__), p) +
-          '")').replace(/\\/g, "\\\\")
+          '")').replace(/\\/g, '\\\\')
         ))
         .join(',\n') +
     '];'
