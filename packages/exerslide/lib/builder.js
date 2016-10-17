@@ -132,9 +132,9 @@ function writeSlideFile(config) {
     'module.exports = [\n' +
       slides
         .map(p => (
-          'require("' + path.join(__dirname, './slide-loader') +
+          ('require("' + path.join(__dirname, './slide-loader') +
           '!' + path.relative(path.dirname(config.__slideFile__), p) +
-          '")'
+          '")').replace(/\\/g, "\\\\")
         ))
         .join(',\n') +
     '];'
