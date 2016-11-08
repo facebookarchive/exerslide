@@ -5,6 +5,18 @@ releases](https://github.com/facebookincubator/exerslide/releases) only reflect
 the status of the `exerslide` package.  To save space, `exerslide-plugin-*` 
 prefix is omitted from package names
 
+## exerslide v1.1.3, markdown-converter v1.1.1 (2016-11-08)
+
+### Fixed
+
+- Properly escape backlashes on Windows ( #13 , @rubengees )
+- Do not error if a slide with unknown MIME type is converted (6b1ac80)
+- Allow custom `className`s to be passed to `<Editor />` (68f42f1)
+- Don't throw an "unknown language" error when using React code fences 
+  (ad76172)
+
+---
+
 ## exerslide-cli v1.1.0 (2016-09-09)
 
 ### New

@@ -1,6 +1,6 @@
 {
   "name": "exerslide",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A tool for creating HTML presentations with focus on exercises for web technologies",
   "scripts": {
     "test": "npm run test-browser && npm run test-server",

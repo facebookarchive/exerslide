@@ -1,6 +1,6 @@
 {
   "name": "exerslide-plugin-markdown-converter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An HTML to React element converter for exerslide.",
   "author": "Felix Kling",
   "scripts": {
