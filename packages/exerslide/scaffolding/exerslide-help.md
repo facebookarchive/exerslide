@@ -1,4 +1,4 @@
-This project was created with [exerslide][]. This document contains information 
+This project was created with [exerslide][]. This document contains information
 about how to perform common tasks.
 
 ## Table of Contents
@@ -7,7 +7,7 @@ about how to perform common tasks.
 ### Project Maintenance
 - [Updating to New Release](#updating-to-new-release)
 - [Directory Structure](#directory-structure)
- 
+
 ### Content Creation and Organization
 - [Organize Slides](#organize-slides)
 - [Creating a Slide](#creating-a-slide)
@@ -25,15 +25,15 @@ about how to perform common tasks.
 
 ## Updating to New Releases
 
-If you have a "living" presentation, you might want to update to a new versions 
+If you have a "living" presentation, you might want to update to a new versions
 of exerslide. exerslide is split into two packages:
 
-- `exerslide-cli` is the global command-line utility with which you can create 
+- `exerslide-cli` is the global command-line utility with which you can create
 new projects
-- `exerslide` is a dependency of every project and contains the core logic of 
+- `exerslide` is a dependency of every project and contains the core logic of
 the presentation
 
-You rarely will have to update `exerslide-cli`, it delegates everything to the 
+You rarely will have to update `exerslide-cli`, it delegates everything to the
 local `exerslide` in the current project.
 
 To get the new *patch* version of `exerslide`, run
@@ -44,7 +44,7 @@ npm update exerslide
 
 in the project.
 
-To get the latest version, run 
+To get the latest version, run
 
 ```sh
 npm install --save exerslide@latest
@@ -56,13 +56,13 @@ In both cases, run
 exerslide copy-defaults
 ```
 
-to get the latest changes to the default files in your project. If there are 
+to get the latest changes to the default files in your project. If there are
 conflicts, you will be given the option to resolve them.
 
-**Note:** If you upgrade to a new feature version (e.g. `1.x.z` to `1.y.z`), 
+**Note:** If you upgrade to a new feature version (e.g. `1.x.z` to `1.y.z`),
 you might have to update your custom CSS and JavaScript files.
 
-If `package.json` changed, you might also have to run `npm install` to get the 
+If `package.json` changed, you might also have to run `npm install` to get the
 latest dependencies.
 
 ## Directory structure
@@ -90,7 +90,7 @@ myProject/
 
 - `css/exerslide.css` contains the default CSS styles.
 - `css/myProject.css` you can add your own styles here.
-- `js/presentation.js` is the main entry file. You can edit it to load 
+- `js/presentation.js` is the main entry file. You can edit it to load
   additional plugins and configure other aspects of your presentation.
 - `js/MasterLayout.js` defines the overall structure of the site.
 - `js/SlideLayout.js` defines the structure shared by every slide.
@@ -105,7 +105,7 @@ myProject/
 
 ## Organize Slides
 
-By default, exerslide determines the order of the slides by sorting the file 
+By default, exerslide determines the order of the slides by sorting the file
 names alphabetically. For example, if you name your slides as
 
 ```text
@@ -137,8 +137,8 @@ folder.
 
 ## Creating a Slide
 
-Slide are text files and stored in `slides/`. Metadata is stored in the YAML 
-front matter and content is stored in the body. Use the correct file extension 
+Slide are text files and stored in `slides/`. Metadata is stored in the YAML
+front matter and content is stored in the body. Use the correct file extension
 for the markup you are using in the slide.
 
 ### `slides/example.md`
@@ -165,7 +165,7 @@ title: An HTML example
 
 ## Using Images in Slides
 
-Thanks to webpack, including an image in a slide is as simple as referencing 
+Thanks to webpack, including an image in a slide is as simple as referencing
 it. If your slide structure is as follows
 
 ```
@@ -193,7 +193,7 @@ Of course that works for HTML or any other markup as well.
 
 ## Linking Between Slides
 
-Give the slide you want to link to an `id`, and use `#/id` as the URL in the 
+Give the slide you want to link to an `id`, and use `#/id` as the URL in the
 link.
 
 For example:
@@ -218,13 +218,13 @@ Go back to the [first slide](#/first)
 ```
 
 If you are using *Markdown* you can even omit the link text and have exerslide
-automatically using the corresponding slide title. In the above example, using 
+automatically using the corresponding slide title. In the above example, using
 `[](#/first)` would be the same as `[First Slide](#/first)`.
 
 
 ## Using Custom Styles
 
-While you can edit the default CSS rules (`css/exerslide.css`), it's better if 
+While you can edit the default CSS rules (`css/exerslide.css`), it's better if
 you add styles to your own stylesheet. When creating a new project, exerslide
 will create an empty CSS file where you can put your CSS rules.
 
@@ -238,7 +238,7 @@ will create an empty CSS file where you can put your CSS rules.
 
 ## Using Custom Components
 
-You can create and use your own React components. Exerslide supports ES6 
+You can create and use your own React components. Exerslide supports ES6
 modules and syntax thanks to Babel.
 
 The following example adds a footer to the bottom of the page:
@@ -292,7 +292,7 @@ and add it to `styles` in `exerslide.config.js`:
  * Paths to stylesheets. Can refer to modules.
  */
 stylesheets: [
-  'foundation-sites/dist/foundation.css',
+  'foundation-sites/dist/css/foundation.css',
   'font-awesome/css/font-awesome.css',
   'highlight.js/styles/solarized-light.css',
   './css/style.css',
@@ -301,8 +301,8 @@ stylesheets: [
 ],
 ```
 
-If you are using CSS styles to style a specific component, you can also just 
-import the CSS stylesheet from the component itself (instead of editing 
+If you are using CSS styles to style a specific component, you can also just
+import the CSS stylesheet from the component itself (instead of editing
 `exerslide.config.js`, thanks to webpack):
 
 ```js
@@ -316,7 +316,7 @@ export default function Header(props) {
 
 ## Adding Dependencies
 
-A new project already has a couple of essential dependencies, but you can 
+A new project already has a couple of essential dependencies, but you can
 easily add more to use in your own JavaScript files.
 
 ```bash
@@ -325,11 +325,11 @@ npm install --save <library-name>
 
 ## Creating a Layout
 
-Layouts contain *behavior* and allow you do keep your slides simple. Layouts 
+Layouts contain *behavior* and allow you do keep your slides simple. Layouts
 are React components and stored in the `layouts/` directory of the project.
 
-The layout components get passed the title, the layout data and the content of 
-the slide. Any content should be rendered via exerslide's `<ContentRenderer />` 
+The layout components get passed the title, the layout data and the content of
+the slide. Any content should be rendered via exerslide's `<ContentRenderer />`
 (which takes care of converting markup to react elements).
 
 The following example demonstrates a simple two column layout (but have a look
@@ -354,7 +354,7 @@ export default function TwoColumns({title, content}) {
 }
 ```
 
-To use this layout for a specific slide, use `layout: TwoColumns` in the 
+To use this layout for a specific slide, use `layout: TwoColumns` in the
 metadata header:
 
 ```yaml
@@ -369,11 +369,11 @@ Right column
 
 ## Creating a Content Converter
 
-If you are using a markup language other than Markdown or HTML, you can create 
-your own content converter. Content converters are stored in in the 
-`contentTypes/` directory of the project. Content converters are functions that 
-receive a value and context information (the current slide object, the slide 
-index, the configuration object, etc) and return something that React can 
+If you are using a markup language other than Markdown or HTML, you can create
+your own content converter. Content converters are stored in in the
+`contentTypes/` directory of the project. Content converters are functions that
+receive a value and context information (the current slide object, the slide
+index, the configuration object, etc) and return something that React can
 render.
 
 The following example creates a hypothetical wikitext:
@@ -388,7 +388,7 @@ export default function convert(value, context) {
 }
 ```
 
-This converter can be used in slides by specifying the `content_type` in the 
+This converter can be used in slides by specifying the `content_type` in the
 metadata header:
 
 ```yaml
@@ -401,13 +401,13 @@ content_type: wikitext
 
 ## Using Plugins
 
-Plugins provide layouts, content type converters or other functionality that 
+Plugins provide layouts, content type converters or other functionality that
 make it easier for your to *write* slides.
 
-For example, the layouts that exerslide ships with (`Column`, `Center`, etc.) 
+For example, the layouts that exerslide ships with (`Column`, `Center`, etc.)
 are implemented as plugins.
 
-To be able to use these plugins, add them to the `plugins` array in 
+To be able to use these plugins, add them to the `plugins` array in
 `exerslide.config.js`:
 
 ```js
@@ -426,9 +426,9 @@ plugins: [
 ],
 ```
 
-There is another type of plugins that extend an exerslide presentation at 
-runtime, i.e. when viewing the presentation. Some of exerslides core features 
-are implemented as such extensions. They are added in `js/presentation.js`, for 
+There is another type of plugins that extend an exerslide presentation at
+runtime, i.e. when viewing the presentation. Some of exerslides core features
+are implemented as such extensions. They are added in `js/presentation.js`, for
 example:
 
 ```js

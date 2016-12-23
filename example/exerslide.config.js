@@ -25,7 +25,7 @@ module.exports = {
    * Paths to stylesheets. Can refer to modules.
    */
   stylesheets: [
-    'foundation-sites/dist/foundation.css',
+    'foundation-sites/dist/css/foundation.css',
     'font-awesome/css/font-awesome.css',
     'highlight.js/styles/solarized-light.css',
     './css/exerslide.css',
