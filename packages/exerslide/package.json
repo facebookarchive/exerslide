@@ -36,7 +36,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "optionalDependencies": {
-    "foundation-sites": "^6.1.2",
+    "foundation-sites": "^6.3.0",
     "font-awesome": "^4.4.0"
   },
   "peerDependencies": {
