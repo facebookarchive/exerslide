@@ -5,6 +5,28 @@ releases](https://github.com/facebookincubator/exerslide/releases) only reflect
 the status of the `exerslide` package.  To save space, `exerslide-plugin-*` 
 prefix is omitted from package names
 
+## exerslide v1.1.4
+
+### Fixed
+
+- foundation-sites v6.3+ changed its folder structure, which caused errors 
+including the CSS files ( #15, @hawkins)
+
+### Upgrade instructions for existing projects
+
+Run
+
+```
+$ npm install --save exerslide@latest
+$ exerslide copy-defaults
+$ npm install
+```
+
+This will update `exerslide` to the latest version, copy the new template files 
+and install the latest version of foundation-sites.
+
+---
+
 ## exerslide v1.1.3, markdown-converter v1.1.1 (2016-11-08)
 
 ### Fixed
