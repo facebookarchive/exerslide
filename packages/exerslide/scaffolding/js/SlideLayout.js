@@ -22,7 +22,7 @@ import React from 'react';
  */
 export default function SlideLayout({children}) {
   return (
-    <ExtensionPoint tags={['slide', 'a11y-announce-content', 'content']}>
+    <ExtensionPoint tags={['content']}>
       <div>
         {children}
       </div>

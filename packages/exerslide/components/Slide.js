@@ -11,6 +11,7 @@ import {addStyle} from '../browser/utils/styleHelper';
 import {evalScript} from '../browser/utils/scriptHelper';
 import {publish} from '../browser/pubSub';
 import ContentRenderer from './ContentRenderer';
+import ExtensionPoint from './ExtensionPoint';
 
 let documentTitlePrefix = null;
 
@@ -197,14 +198,16 @@ export default class Slide extends React.Component {
     );
 
     return (
-      <div
-        id={`exerslide-slide${idSuffix}`}
-        aria-label={'Slide:'}
-        aria-labelledby={`exerslide-slide${idSuffix} exerslide-slide-title${idSuffix}`}
-        role={isActive ? 'main' : null}
-        className='exerslide-slide'>
-        {content}
-      </div>
+      <ExtensionPoint tags={['slide', 'a11y-announce-content']}>
+        <div
+          id={`exerslide-slide${idSuffix}`}
+          aria-label={'Slide:'}
+          aria-labelledby={`exerslide-slide${idSuffix} exerslide-slide-title${idSuffix}`}
+          role={isActive ? 'main' : null}
+          className='exerslide-slide'>
+          {content}
+        </div>
+      </ExtensionPoint>
     );
   }
 }

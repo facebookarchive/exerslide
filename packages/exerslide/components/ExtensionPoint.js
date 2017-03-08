@@ -66,7 +66,6 @@ export default class ExtensionPoint extends React.Component {
       slides: this.context.slides,
     };
 
-
     if (components.replace) {
       // We cannot assume that wrapping components should be applied to the
       // replaced content so we return here directly. If there is more than
