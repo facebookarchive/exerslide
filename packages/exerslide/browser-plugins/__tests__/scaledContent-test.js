@@ -22,17 +22,31 @@ function run(config, slides, fn) {
   );
 }
 
+
 describe('browser-plugin/scaledContent', () => {
   const dE = document.documentElement;
 
+  function setClientWidth(width) {
+    // See https://github.com/tmpvar/jsdom/issues/1736
+    Object.defineProperty(
+      dE,
+      'clientWidth',
+      {
+        configurable: true,
+        value: width,
+      }
+    );
+  }
+
   beforeEach(() => {
-    dE.clientWidth = 1000;
+    // Overwrite default getter
+    setClientWidth(1000);
     dE.style.fontSize = '10px';
   });
 
   it('sets the font size of the document root', () => {
     dE.style.fontSize = '10px';
-    dE.clientWidth = 1400;
+    setClientWidth(1400);
     run(null, [], () => {
       expect(dE.style.fontSize).to.not.equal('10px');
     });
@@ -112,9 +126,10 @@ describe('browser-plugin/scaledContent', () => {
   });
 
   it('doesn\'t scale if the viewport is smaller than the content', () => {
-    dE.clientWidth = 250; // < 30em * 10px
+    setClientWidth(250);   // < 30em * 10px
+
     run(
-      {conentWidth: 30},
+      {contentWidth: 30},
       [],
       () => {
         expect(dE.style.fontSize).to.equal('10px');
