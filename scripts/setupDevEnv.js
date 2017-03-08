@@ -75,8 +75,27 @@ const INSTALLED_PEER_DEPENDENCIES = ALL_PEER_DEPENDENCIES
 
 // 0. Install peer dependencies globally
 console.log('0. Install all peer dependencies globally');
+
 run(`npm rm -g --loglevel=error ${INSTALLED_PEER_DEPENDENCIES.join(' ')}`);
-run(`npm install -g --loglevel=error ${INSTALLED_PEER_DEPENDENCIES.join(' ')}`);
+
+// Get acceptable version(s) from scaffolding file
+const scaffolding_pkg = require(path.join(
+  PACKAGESPATH,
+  'exerslide',
+  'scaffolding',
+  'package.json'
+));
+const APP_DEPENDENCIES = Object.assign(
+  {},
+  scaffolding_pkg.dependencies,
+  scaffolding_pkg.devDependencies
+);
+run(
+  'npm install -g --loglevel=error ' +
+  INSTALLED_PEER_DEPENDENCIES
+    .map(p => `${p}@${APP_DEPENDENCIES[p]}`)
+    .join(' ')
+);
 
 // 1. "npm link" all packages
 console.log('\n1. Link all packages');
