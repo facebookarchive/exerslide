@@ -5,6 +5,27 @@ releases](https://github.com/facebookincubator/exerslide/releases) only reflect
 the status of the `exerslide` package.  To save space, `exerslide-plugin-*` 
 prefix is omitted from package names
 
+## exerslide v1.1.5
+
+### Fixed
+
+- The accessibility feature that announces if there is more content on a slide
+  than it is visible didn't work correctly (there was no announcement).  
+  Reported by @mcking65 in #14 and fixed in db52301.
+
+### Upgrade instructions for existing projects
+
+Run
+
+```
+$ npm install --save exerslide@latest
+$ exerslide copy-defaults
+$ exerslide build
+```
+
+This will update exerslide to the latest version, copy the changed template 
+files and rebuild the presentation.
+
 ## exerslide v1.1.4
 
 ### Fixed
