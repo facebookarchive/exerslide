@@ -441,5 +441,5 @@ use(debugInformation);
 
 <!-- This hash helps exerslide to find out whether this file needs to be
 updated. Please keep it even if you completely change this README.
-@exerslide-file-hash 06987c582adfd172b3ce845d7dfcce7d
+@exerslide-file-hash fea7f23bc80d6c78824604f2fb1a612e
 -->

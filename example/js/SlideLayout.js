@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -8,7 +9,7 @@
 /*
  * This hash helps exerslide to determine whether the file needs to be updated
  * or not. Please don't remove it.
- * @exerslide-file-hash c1d1b16e36de349931df2b15adc2a9c8
+ * @exerslide-file-hash 3280f175535da1ea028db9a841205223
  */
 
 import ExtensionPoint from 'exerslide/components/ExtensionPoint';
@@ -20,7 +21,7 @@ import React from 'react';
  */
 export default function SlideLayout({children}) {
   return (
-    <ExtensionPoint tags={['slide', 'a11y-announce-content', 'content']}>
+    <ExtensionPoint tags={['content']}>
       <div>
         {children}
       </div>

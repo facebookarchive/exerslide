@@ -8,11 +8,11 @@ style: |
     background-size: contain !important;
     max-width: 100% !important;
   }
-  #exerslide-slide {
+  .exerslide-slide {
     color: white;
     padding: 0;
   }
-  #exerslide-slide > * {
+  .exerslide-slide > * {
     max-width: 100% !important;
   }
 layout_data:

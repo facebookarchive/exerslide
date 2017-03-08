@@ -9,7 +9,7 @@
 /*
  * This hash helps exerslide to determine whether the file needs to be updated
  * or not. Please don't remove it.
- * @exerslide-file-hash 44b5820643213c916dd78131a7d77e2d
+ * @exerslide-file-hash 2c68270c19bbcd837746864a3b15e7f2
  */
 
 'use strict';

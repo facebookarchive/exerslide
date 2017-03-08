@@ -5,14 +5,14 @@
   "private": true,
   "dependencies": {
     "codemirror": "^5.7.0",
-    "exerslide": "~1.1.1",
+    "exerslide": "~1.1.2",
     "exerslide-plugin-bulletlist-layout": "^1.1.0",
     "exerslide-plugin-center-layout": "^1.1.0",
     "exerslide-plugin-column-layout": "^1.1.0",
     "exerslide-plugin-html-converter": "^1.0.0",
     "exerslide-plugin-markdown-converter": "^1.1.0",
     "font-awesome": "^4.4.0",
-    "foundation-sites": "^6.1.2",
+    "foundation-sites": "^6.3.0",
     "highlight.js": "^9.6.0",
     "markdown-it-container": "^2.0.0",
     "react": "^15.0.0",
@@ -39,5 +39,5 @@
     "webpack": "^1.12.9",
     "yaml-loader": "^0.4.0"
   },
-  "exerslide": "@exerslide-file-hash ec8812f166aec5f48c798edda7f7a20e"
+  "exerslide": "@exerslide-file-hash e6ef250ab036a57c64fb8004065b237f"
 }
