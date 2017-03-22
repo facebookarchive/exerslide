@@ -286,7 +286,7 @@ for
 - `exerslide-plugin-markdown-converter/contentTypes/text_x-markdown.js`.
 
 **Note:** Just like for layouts, you can prefix the type name with a plugin 
-name (`<pluginName>:<typeName>`) to avoid conficts.
+name (`<pluginName>:<typeName>`) to avoid conflicts.
 
 ### Styles
 
@@ -388,7 +388,7 @@ config and webpack config objects. This allows plugins to add additional slide
 transforms or update the webpack configuration.
 
 The default layouts and content converters which are coming with exerslide are 
-implement as plugins. Have a look at the [packages](packages/) folder for 
+implemented as plugins. Have a look at the [packages](packages/) folder for 
 examples.
 
 [webpack-config]: ./packages/exerslide-cli/scaffolding/webpack.config.js
