@@ -17,6 +17,7 @@
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "colors": "^1.1.2",
+    "cross-spawn": "^5.1.0",
     "diff": "^2.2.1",
     "editor": "^1.0.0",
     "front-matter": "^2.0.5",

@@ -41,7 +41,12 @@ const EventEmitter = require('events');
  */
 module.exports = function copyDir(options) {
   const ignorePatterns = options.ignorePatterns || [];
-  const renameMap = options.renameMap || {};
+  const renameMap = {};
+  if (options.renameMap) {
+    Object.keys(options.renameMap).forEach(sourcePath =>
+      renameMap[path.normalize(sourcePath)] = options.renameMap[sourcePath]
+    );
+  }
   const transform = options.transform;
   const ask = options.ask;
 

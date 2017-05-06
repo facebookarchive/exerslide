@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.1.2",
+    "cross-spawn": "^5.1.0",
     "liftoff": "^2.2.1",
     "yargs": "^5.0.0"
   },

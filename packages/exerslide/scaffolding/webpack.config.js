@@ -80,12 +80,12 @@ module.exports = {
       {
         test: /index\.html$/,
         loader: 'html',
-        exclude: /slides\//,
+        exclude: /slides[\\\/]/,
       },
       {
         test: /\.jsx?$/,
         loader: 'babel',
-        exclude: /node_modules\/(?!exerslide\b)/,
+        exclude: /node_modules[\\\/](?!exerslide\b)/,
         query: {
           presets: [
             require.resolve('babel-preset-es2015'),
