@@ -6,6 +6,7 @@
  * the root directory of this source tree.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'codemirror';
 
@@ -164,35 +165,35 @@ Editor.propTypes = {
   /**
    * Configuration options to pass to the CodeMirror instance.
    */
-  config: React.PropTypes.object,
+  config: PropTypes.object,
   /**
    * Additional classes to add to the editor.
    */
-  className: React.PropTypes.string,
+  className: PropTypes.string,
   /**
    * The initial value to show in the editor.
    */
-  defaultValue: React.PropTypes.string,
+  defaultValue: PropTypes.string,
   /**
    * The syntax mode to use/
    */
-  mode: React.PropTypes.string,
+  mode: PropTypes.string,
   /**
    * Whether the text in the editor can be edited or not.
    */
-  readOnly: React.PropTypes.bool,
+  readOnly: PropTypes.bool,
   /**
    * Called whenever the editor value changes. Gets passed the new value.
    */
-  onChange: React.PropTypes.func,
+  onChange: PropTypes.func,
   /**
    * Aria label to use for the editor
    */
-  label: React.PropTypes.string,
+  label: PropTypes.string,
   /**
    * Custom CSS styles
    */
-  style: React.PropTypes.object,
+  style: PropTypes.object,
 };
 
 Editor.defaultProps = {

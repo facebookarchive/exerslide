@@ -6,6 +6,7 @@
  * the root directory of this source tree.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import {addStyle} from '../browser/utils/styleHelper';
 import {evalScript} from '../browser/utils/scriptHelper';
@@ -216,30 +217,30 @@ Slide.propTypes = {
   /**
    * The slide object to render.
    */
-  slide: React.PropTypes.object.isRequired,
+  slide: PropTypes.object.isRequired,
   /**
    * The index of the slide that is rendered.
    */
-  slideIndex: React.PropTypes.number.isRequired,
+  slideIndex: PropTypes.number.isRequired,
   /**
    * The generic layout to use to render this slide.
    */
-  slideLayout: React.PropTypes.func.isRequired,
+  slideLayout: PropTypes.func.isRequired,
 };
 
 Slide.contextTypes = {
   /**
    * The current (i.e. active) slide object.
    */
-  slide: React.PropTypes.object.isRequired,
+  slide: PropTypes.object.isRequired,
   /**
    * The index of the active slide.
    */
-  slideIndex: React.PropTypes.number.isRequired,
+  slideIndex: PropTypes.number.isRequired,
   /**
    * The index of the active slide.
    */
-  slides: React.PropTypes.arrayOf(React.PropTypes.object),
+  slides: PropTypes.arrayOf(PropTypes.object),
 };
 
 /**
@@ -250,13 +251,13 @@ Slide.childContextTypes = {
   /**
    * The current (i.e. active) slide object.
    */
-  slide: React.PropTypes.object.isRequired,
+  slide: PropTypes.object.isRequired,
   /**
    * The index of the active slide.
    */
-  slideIndex: React.PropTypes.number.isRequired,
+  slideIndex: PropTypes.number.isRequired,
   /**
    * The index of the active slide.
    */
-  slides: React.PropTypes.arrayOf(React.PropTypes.object),
+  slides: PropTypes.arrayOf(PropTypes.object),
 };

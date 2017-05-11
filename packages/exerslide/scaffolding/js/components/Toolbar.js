@@ -13,6 +13,7 @@
  * @exerslide-file-hash
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import ExtensionPoint from 'exerslide/components/ExtensionPoint';
 import {forward, back} from 'exerslide/browser';
@@ -61,17 +62,17 @@ export default function Toolbar({className}, {slideIndex, slides}) {
 }
 
 Toolbar.propTypes = {
-  className: React.PropTypes.string,
+  className: PropTypes.string,
 };
 
 Toolbar.contextTypes = {
   /**
    * This index of the current slide.
    */
-  slideIndex: React.PropTypes.number.isRequired,
+  slideIndex: PropTypes.number.isRequired,
 
   /**
    * Number of slides.
    */
-  slides: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  slides: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

@@ -6,6 +6,7 @@
  * the root directory of this source tree.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
@@ -113,6 +114,6 @@ class DebugToolbar extends React.Component {
 }
 
 DebugToolbar.propTypes = {
-  registerExtension: React.PropTypes.func,
-  slide: React.PropTypes.object,
+  registerExtension: PropTypes.func,
+  slide: PropTypes.object,
 };

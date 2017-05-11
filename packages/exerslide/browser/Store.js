@@ -6,7 +6,8 @@
  * the root directory of this source tree.
  */
 
-import React, {PropTypes, Component} from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import {normalizeOptions} from './utils/optionHelper';
 import {publish} from './pubSub';
 

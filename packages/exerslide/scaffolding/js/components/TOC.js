@@ -14,6 +14,7 @@
  * @exerslide-file-hash
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import {groupByChapter, IS_MOBILE} from 'exerslide/browser';
 
@@ -69,9 +70,9 @@ class Entry extends React.Component {
 }
 
 Entry.propTypes = {
-  slideIndex: React.PropTypes.number,
-  slides: React.PropTypes.array,
-  active: React.PropTypes.bool,
+  slideIndex: PropTypes.number,
+  slides: PropTypes.array,
+  active: PropTypes.bool,
 };
 
 /**
@@ -213,29 +214,29 @@ TOC.propTypes = {
   /**
    * Whether to show a toggle button or not.
    */
-  togglable: React.PropTypes.bool,
+  togglable: PropTypes.bool,
 
   /**
    * Callback called when TOC is shown or hidden.
    */
-  onToggle: React.PropTypes.func,
+  onToggle: PropTypes.func,
 };
 
 TOC.contextTypes = {
   /**
    * Current slide.
    */
-  slide: React.PropTypes.object,
+  slide: PropTypes.object,
 
   /**
    * Index of the currently shown slide.
    */
-  slideIndex: React.PropTypes.number,
+  slideIndex: PropTypes.number,
 
   /**
    * All slides.
    */
-  slides: React.PropTypes.array,
+  slides: PropTypes.array,
 };
 
 TOC.defaultProps = {
