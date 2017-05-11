@@ -160,10 +160,7 @@ function initLocalVersion() {
 
     spawn(
       'node',
-      [
-        __filename,
-        ...process.argv.slice(2), // pass original arguments
-      ],
+      [__filename].concat(process.argv.slice(2)), // pass original arguments
       {
         stdio: 'inherit',
         cwd: env.cwd,
