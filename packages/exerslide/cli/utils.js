@@ -36,7 +36,7 @@ function assertLocalConfig(env) {
   if (!env.configPath) {
     process.stderr.write(
       colors.red(
-        `Unable to find exerslide.config.js.\nYou need to run "exerslide init" first.\n`
+        'Unable to find exerslide.config.js.\nYou need to run "exerslide init" first.\n'
       )
     );
     process.exit(1);

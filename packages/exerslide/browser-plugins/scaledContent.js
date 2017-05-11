@@ -103,7 +103,7 @@ function ScaledContentWidth(props) {
     slideIndex: _slideIndex,
     slides: _slides,
     style,
-    ...restProps,
+    ...restProps
   } = props;
   const child = React.Children.only(children);
   return React.cloneElement(

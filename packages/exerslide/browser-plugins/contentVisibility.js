@@ -106,7 +106,7 @@ class Visibility extends React.Component {
       slide: _slide,
       slideIndex: _slideIndex,
       slides: _slides,
-      ...restProps,
+      ...restProps
     } = this.props;
 
     const announcement = this.state.contentOverflow ?

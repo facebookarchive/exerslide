@@ -162,7 +162,7 @@ function initLocalVersion() {
       'node',
       [
         __filename,
-        ...process.argv.slice(2) // pass original arguments
+        ...process.argv.slice(2), // pass original arguments
       ],
       {
         stdio: 'inherit',
