@@ -44,7 +44,7 @@ running `exerslide init`:
     exerslide init myPresentation
     ```
 
-3. Created/edit slides in `slides/`.
+3. Create/edit slides in `slides/`.
 
 4. Run
 
