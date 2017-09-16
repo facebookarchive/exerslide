@@ -10,7 +10,8 @@ const transformHelper = require('exerslide').transformHelper;
 const extractLanguageHighlights = require('../extractLanguageHighlights');
 const expect = require('chai').expect;
 
-const helperPath = require.resolve('../utils/registerLanguage');
+const helperPath = require.resolve('../utils/registerLanguage')
+  .replace(/\\/g, '\\\\');
 
 function test(languages, slide, verify) {
   extractLanguageHighlights({languagePaths: languages})(transformHelper)

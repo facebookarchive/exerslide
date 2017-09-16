@@ -102,7 +102,7 @@ function loadLocalCommands(localExerslidePath, yargs) {
 
 function installExerslide(argv, env) {
   const fs = require('fs');
-  const childProcess = require('child_process');
+  const spawn = require('cross-spawn');
   const pkgPath = path.join(env.cwd, 'package.json');
 
   if (fs.readdirSync(env.cwd).length > 0) {
@@ -123,7 +123,7 @@ function installExerslide(argv, env) {
   log(
     'Installing exerslide (`npm install exerslide`). This may take a while...'
   );
-  const npm = childProcess.spawn(
+  const npm = spawn(
     'npm',
     ['install', argv.verbose ? '' : '--loglevel=error', 'exerslide'],
     {
@@ -147,7 +147,7 @@ function installExerslide(argv, env) {
 }
 
 function initLocalVersion() {
-  const childProcess = require('child_process');
+  const spawn = require('cross-spawn');
   // reload local version and delegate
   exerslide.launch({}, env => {
     // if exerslide can still not be found, give up
@@ -158,9 +158,9 @@ function initLocalVersion() {
       ));
     }
 
-    childProcess.spawn(
-      __filename,
-      process.argv.slice(2), // pass original arguments
+    spawn(
+      'node',
+      [__filename].concat(process.argv.slice(2)), // pass original arguments
       {
         stdio: 'inherit',
         cwd: env.cwd,

@@ -69,14 +69,14 @@ function installDependencies(argv) {
     return;
   }
 
-  const childProcess = require('child_process');
+  const spawn = require('cross-spawn');
   const colors = require('colors');
 
   return new Promise((resolve, reject) => {
     utils.log(
       'Installing dependencies (`npm install`). This may take a while...'
     );
-    const npm = childProcess.spawn(
+    const npm = spawn(
       'npm',
       ['install', argv.verbose ? '' : '--loglevel=error'],
       {

@@ -6,6 +6,7 @@
  * the root directory of this source tree.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
@@ -31,9 +32,9 @@ Output.propTypes = {
    * Name of the region. Defaults to "Result". Adjust depending on the type of
    * content you present.
    */
-  label: React.PropTypes.string,
+  label: PropTypes.string,
 
-  children: React.PropTypes.node,
+  children: PropTypes.node,
 };
 
 Output.defaultProps = {

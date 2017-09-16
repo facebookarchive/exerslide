@@ -6,6 +6,7 @@
  * the root directory of this source tree.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import {subscribe} from '../browser/pubSub';
 import {getRegisteredExtensions} from '../browser/extensionManager';
@@ -148,14 +149,14 @@ export default class ExtensionPoint extends React.Component {
 }
 
 ExtensionPoint.propTypes = {
-  tags: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  children: React.PropTypes.node,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  children: PropTypes.node,
 };
 
 ExtensionPoint.contextTypes = {
-  slide: React.PropTypes.object.isRequired,
-  slideIndex: React.PropTypes.number.isRequired,
-  slides: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  slide: PropTypes.object.isRequired,
+  slideIndex: PropTypes.number.isRequired,
+  slides: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function getGroupedComponents(tags) {

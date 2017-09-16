@@ -14,6 +14,7 @@
  */
 
 import ExtensionPoint from 'exerslide/components/ExtensionPoint';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
@@ -34,5 +35,5 @@ SlideLayout.propTypes = {
   /**
    * The current slide content and header are passed in as children by exerslide
    */
-  children: React.PropTypes.node,
+  children: PropTypes.node,
 };

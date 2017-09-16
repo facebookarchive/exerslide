@@ -11,19 +11,19 @@
  * type renderer of the current slide received via context.
  */
 
-import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function ContentRenderer({value}, context) {
   return context.slide.contentConverter(value, context);
 }
 
 ContentRenderer.propTypes = {
-  value: React.PropTypes.string,
+  value: PropTypes.string,
 };
 
 ContentRenderer.contextTypes = {
-  slide: React.PropTypes.object.isRequired,
-  slideIndex: React.PropTypes.number.isRequired,
-  slides: React.PropTypes.arrayOf(React.PropTypes.object),
-  config: React.PropTypes.object.isRequired,
+  slide: PropTypes.object.isRequired,
+  slideIndex: PropTypes.number.isRequired,
+  slides: PropTypes.arrayOf(PropTypes.object),
+  config: PropTypes.object.isRequired,
 };

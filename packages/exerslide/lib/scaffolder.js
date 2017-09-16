@@ -55,9 +55,9 @@ module.exports = function scaffolder(targetDir, options, done) {
     // We already initialized this directory, so we don't need to copy some
     // files again.
     filesToIgnore.push(
-      /\/slides\//,
+      /[\\\/]slides[\\\/]/,
       /references.yml$/,
-      /css\/style.css$/
+      /css[\\\/]style.css$/
     );
   }
 

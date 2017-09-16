@@ -17,6 +17,7 @@ function run(args, cwd) {
   return new Promise((resolve, reject) => {
     childProcess.exec(
       [
+        'node',
         path.join(__dirname, 'test-cli.js'),
         'init',
       ]
@@ -63,6 +64,3 @@ describe('exerslide init', () => {
   });
 
 });
-
-
-

@@ -4,8 +4,8 @@
   "description": "A tool for creating HTML presentations with focus on exercises for web technologies",
   "scripts": {
     "test": "npm run test-browser && npm run test-server",
-    "test-browser": "mocha --require ignore-styles --require ./scripts/browser-test-setup.js --compilers js:babel-register `find browser/ browser-plugins/ components/ scaffolding/ -name *-test.js`",
-    "test-server": "mocha `find lib/ cli/ -name *-test.js`",
+    "test-browser": "mocha --require ignore-styles --require ./scripts/browser-test-setup.js --compilers js:babel-register \"./@(browser|browser-plugins|components|scaffolding)/**/*-test.js\"",
+    "test-server": "mocha \"./@(lib|cli)/**/*-test.js\"",
     "lint": "eslint index.js browser.js cli/ lib/ components/ browser/ browser-plugins/ scaffolding/",
     "prepublish": "npm run lint && npm run test"
   },
@@ -17,6 +17,7 @@
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "colors": "^1.1.2",
+    "cross-spawn": "^5.1.0",
     "diff": "^2.2.1",
     "editor": "^1.0.0",
     "front-matter": "^2.0.5",
@@ -30,6 +31,7 @@
     "mocha": "^3.0.2",
     "mousetrap": "^1.6.0",
     "opener": "^1.4.1",
+    "prop-types": "^15.5.0",
     "resolve": "^1.1.6",
     "sane": "^1.4.1",
     "temp": "^0.8.3",
@@ -42,8 +44,8 @@
   "peerDependencies": {
     "codemirror": "^5.7.0",
     "highlight.js": "^9.6.0",
-    "react": "^15.0.0",
-    "react-dom": "^15.0.0",
+    "react": "^15.5.0",
+    "react-dom": "^15.5.0",
     "webpack": "^1.12.11"
   },
   "devDependencies": {
@@ -54,7 +56,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.3.13",
     "chai": "^3.4.1",
-    "enzyme": "^2.4.1",
+    "enzyme": "^2.8.2",
     "eslint": "^3.3.1",
     "eslint-import-resolver-webpack": "^0.5.1",
     "eslint-plugin-import": "^1.13.0",
@@ -62,7 +64,7 @@
     "fs-extra": "^0.30.0",
     "ignore-styles": "^5.0.1",
     "jsdom": "^9.4.5",
-    "react-addons-test-utils": "^15.3.1",
+    "react-test-renderer": "^15.5.0",
     "yargs": "^5.0.0"
   },
   "repository": {

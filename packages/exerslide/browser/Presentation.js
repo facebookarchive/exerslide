@@ -7,6 +7,7 @@
  */
 
 import * as navigation from './navigation';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Slide from '../components/Slide';
 import {subscribe} from './pubSub';
@@ -87,17 +88,17 @@ export default class Presentation extends React.Component {
 }
 
 Presentation.propTypes = {
-  masterLayout: React.PropTypes.func,
-  slideLayout: React.PropTypes.func,
-  slide: React.PropTypes.object,
-  slideIndex: React.PropTypes.number,
-  slides: React.PropTypes.arrayOf(React.PropTypes.object),
-  config: React.PropTypes.object,
-  nextSlide: React.PropTypes.func,
-  previousSlide: React.PropTypes.func,
-  goToSlide: React.PropTypes.func,
+  masterLayout: PropTypes.func,
+  slideLayout: PropTypes.func,
+  slide: PropTypes.object,
+  slideIndex: PropTypes.number,
+  slides: PropTypes.arrayOf(PropTypes.object),
+  config: PropTypes.object,
+  nextSlide: PropTypes.func,
+  previousSlide: PropTypes.func,
+  goToSlide: PropTypes.func,
 };
 
 Presentation.childContextTypes = {
-  config: React.PropTypes.object,
+  config: PropTypes.object,
 };

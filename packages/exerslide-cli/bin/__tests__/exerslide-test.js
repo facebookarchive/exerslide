@@ -17,6 +17,7 @@ function run(args, cwd) {
   return new Promise((resolve, reject) => {
     childProcess.exec(
       [
+        'node',
         path.join(__dirname, '..', 'exerslide.js'),
       ]
       .concat(args).concat(['--EXERSLIDE_TEST']).join(' '),
@@ -70,7 +71,3 @@ describe('exerslide', () => {
   });
 
 });
-
-
-
-

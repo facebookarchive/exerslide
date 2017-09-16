@@ -14,12 +14,14 @@ const path = require('path');
 const scaffolder = require('../scaffolder');
 const testUtils = require('../../scripts/test-utils');
 
-const SCAFFOLDING_PATH = path.resolve(__dirname, '../../scaffolding/');
+const SCAFFOLDING_PATH = path.resolve(__dirname, '../../scaffolding/')
+  .replace(/\\/g, '/');
 
 describe('scaffolder', () => {
 
   it('copies the files from "scaffolding/" to the out dir', done => {
-    const dir = testUtils.makeDirectoryStructure({});
+    const dir = testUtils.makeDirectoryStructure({})
+      .replace(/\\/g, '/');
 
     scaffolder(
       dir,

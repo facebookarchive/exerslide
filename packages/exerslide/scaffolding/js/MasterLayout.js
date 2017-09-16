@@ -14,6 +14,7 @@
  */
 
 import ExtensionPoint from 'exerslide/components/ExtensionPoint';
+import PropTypes from 'prop-types';
 import React from 'react';
 import TOC from './components/TOC';
 import Toolbar from './components/Toolbar';
@@ -58,10 +59,10 @@ MasterLayout.propTypes = {
   /**
    * CSS class names to add to the page.
    */
-  className: React.PropTypes.string,
+  className: PropTypes.string,
 
   /**
    * The rendered slide is passed as child to the master layout.
    */
-  children: React.PropTypes.node,
+  children: PropTypes.node,
 };

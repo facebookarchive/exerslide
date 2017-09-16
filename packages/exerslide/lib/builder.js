@@ -296,7 +296,7 @@ function serve(exerslideConfig, webpackConfig, logger, options) {
       watchOptions: {
         // Don't watch node_modules files, except exerslide packages.
         // That makes local development of exerslide easier.
-        ignored: /node_modules\/(?!exerslide)/,
+        ignored: /node_modules[\\\/](?!exerslide)/,
       },
     });
     server.listen(options.port, function() {

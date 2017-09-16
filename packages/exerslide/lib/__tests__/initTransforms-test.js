@@ -63,6 +63,7 @@ describe('initTransforms', () => {
       {},
       '---\n layout: myLayout\ncontent_type: myType\n---\n',
       (error, result) => {
+        result = result.replace(/\\\\/g, '\\');
         expect(result).to.contain(path.join(dir, 'node_modules/plugin1/contentTypes/myType.js'));
         expect(result).to.contain(path.join(dir, 'node_modules/plugin1/layouts/myLayout.js'));
         done();

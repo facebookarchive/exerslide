@@ -6,6 +6,7 @@
  * the root directory of this source tree.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
@@ -106,7 +107,7 @@ class Visibility extends React.Component {
       slide: _slide,
       slideIndex: _slideIndex,
       slides: _slides,
-      ...restProps,
+      ...restProps
     } = this.props;
 
     const announcement = this.state.contentOverflow ?
@@ -141,8 +142,8 @@ Visibility.propTypes = {
   /**
    * The node whose height should be measured.
    */
-  children: React.PropTypes.node,
-  slide: React.PropTypes.object,
-  slideIndex: React.PropTypes.number,
-  slides: React.PropTypes.arrayOf(React.PropTypes.object),
+  children: PropTypes.node,
+  slide: PropTypes.object,
+  slideIndex: PropTypes.number,
+  slides: PropTypes.arrayOf(PropTypes.object),
 };
